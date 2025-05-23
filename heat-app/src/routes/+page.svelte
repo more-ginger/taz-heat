@@ -1,2 +1,6 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<h1 class="font-semibold m-m">Taz Heat Project</h1>
+<h2 class="font-semibold">All Project Links</h2>
+
+<nav class="flex flex-col text-orange">
+  <a class="underline" href="/correlationmap"> correlationmap</a>
+</nav>
