@@ -1,7 +1,7 @@
 <script lang="ts">
   import { geoMercator, geoPath } from "d3-geo";
   import { type ScaleSequential } from "d3-scale";
-  import type { FeatureCollection } from "geojson";
+  import type { Feature, FeatureCollection } from "geojson";
   import Region from "./Region.svelte";
   import Tooltip from "./Tooltip.svelte";
 
@@ -19,8 +19,6 @@
   let w = $state(0);
   let h = $state(0);
 
-  let tooltipRegion = $state();
-
   //PROJECTION
   let projection = $derived(
     geoMercator()
@@ -33,13 +31,34 @@
   //PATH GENERATOR PROJECTION
   let pathGenerator = $derived(geoPath().projection(projection));
 
-  let setTooltip = function (id: number) {
-    tooltipRegion = id;
+  //tooltip
+  let tooltipRegionID: undefined | number = $state();
+
+  let tooltipRegion = $derived(
+    data.features.find((d: Feature) => d.properties && d.properties.PLR_ID == tooltipRegionID)
+  );
+
+  let setTooltip = function (e: Event, id: number) {
+    e.stopPropagation();
+    tooltipRegionID = id;
+  };
+
+  let closeTooltip = function () {
+    console.log("close");
+    tooltipRegionID = undefined;
   };
 </script>
 
 <div bind:clientHeight={h} bind:clientWidth={w} class="w-full max-w-[1020px] h-fit max-h-[550px]">
-  <svg width={w} height={h}>
+  <svg
+    width={w}
+    height={h}
+    onclick={closeTooltip}
+    tabindex="0"
+    role="button"
+    aria-label="close tooltip"
+    onkeydown={closeTooltip}
+  >
     <defs>
       <pattern id="dots-large" patternUnits="userSpaceOnUse" width="4" height="4">
         <circle cx="2" cy="2" r="1.25" fill="currentColor" />
@@ -53,25 +72,22 @@
     </defs>
     {#each data.features as feature}
       {#if feature.properties}
-        <g
-          onclick={() => setTooltip(feature.properties!.PLR_ID)}
-          tabindex="0"
-          role="button"
-          aria-label="tooltip"
-          onkeydown={() => setTooltip(feature.properties!.PLR_ID)}
-        >
-          {#if tooltipRegion == feature.properties.PLR_ID}<Tooltip {feature}></Tooltip>{/if}
-          <Region
-            {feature}
-            {activePovertyLevel}
-            {activeTemperatureLevel}
-            {filterActive}
-            {heatScale}
-            {pathGenerator}
-          ></Region>
-        </g>
+        <Region
+          regionHighlighted={!filterActive ||
+            (filterActive &&
+              feature.properties.lst_cat == activeTemperatureLevel &&
+              feature.properties.sgb_cat == activePovertyLevel)}
+          {feature}
+          path={pathGenerator(feature)}
+          {heatScale}
+          {setTooltip}
+          {closeTooltip}
+        ></Region>
       {/if}
     {/each}
+    {#if tooltipRegion}
+      <Tooltip feature={tooltipRegion} centroid={pathGenerator.centroid(tooltipRegion)}></Tooltip>
+    {/if}
   </svg>
   <div class="text-end">Quelle: XYZ</div>
 </div>

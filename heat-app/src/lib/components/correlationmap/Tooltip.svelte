@@ -1,5 +1,5 @@
 <script lang="ts">
-  let { feature } = $props();
+  let { feature, centroid } = $props();
 
   let temperature = $derived(
     new Intl.NumberFormat("de-DE", {
@@ -17,8 +17,8 @@
   );
 </script>
 
-<foreignObject x="0" y="0" width="300" height="160" class="bg-pink"
-  ><div class="flex flex-col">
+<foreignObject x={centroid[0]} y={centroid[1]} width="200" height="100"
+  ><div class="flex flex-col p-1 border bg-white">
     <h3>{feature.properties.Name}</h3>
     <p>Temperatur: {temperature}</p>
     <p>SGB-Anteil: {percentage}</p>
