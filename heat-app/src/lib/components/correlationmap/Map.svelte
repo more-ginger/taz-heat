@@ -1,8 +1,8 @@
 <script lang="ts">
   import { geoMercator, geoPath } from "d3-geo";
   import { type ScaleSequential } from "d3-scale";
-  import Legend from "./Legend.svelte";
   import type { FeatureCollection } from "geojson";
+  import Region from "./Region.svelte";
 
   interface Props {
     data: FeatureCollection;
@@ -46,48 +46,14 @@
     </defs>
     {#each data.features as feature}
       {#if feature.properties}
-        <path
-          d={pathGenerator(feature)}
-          class="stroke-black stroke-[0.5]"
-          fill={heatScale(feature.properties.LST)}
-          opacity={filterActive &&
-          feature.properties.sgb_cat != activePovertyLevel &&
-          feature.properties.lst_cat != activeTemperatureLevel
-            ? 0.1
-            : 1.0}
-        >
-        </path>
-        {#if feature.properties.sgb_cat == "high"}
-          <path
-            d={pathGenerator(feature)}
-            fill="url(#dots-large)"
-            opacity={filterActive &&
-            feature.properties.sgb_cat != activePovertyLevel &&
-            feature.properties.lst_cat != activeTemperatureLevel
-              ? 0.1
-              : 1.0}
-          ></path>
-        {:else if feature.properties.sgb_cat == "medium"}
-          <path
-            d={pathGenerator(feature)}
-            fill="url(#dots-medium)"
-            opacity={filterActive &&
-            feature.properties.sgb_cat != activePovertyLevel &&
-            feature.properties.lst_cat != activeTemperatureLevel
-              ? 0.1
-              : 1.0}
-          ></path>
-        {:else if feature.properties.sgb_cat == "low"}
-          <path
-            d={pathGenerator(feature)}
-            fill="url(#dots-small)"
-            opacity={filterActive &&
-            feature.properties.sgb_cat != activePovertyLevel &&
-            feature.properties.lst_cat != activeTemperatureLevel
-              ? 0.1
-              : 1.0}
-          ></path>
-        {/if}
+        <Region
+          {feature}
+          {activePovertyLevel}
+          {activeTemperatureLevel}
+          {filterActive}
+          {heatScale}
+          {pathGenerator}
+        ></Region>
       {/if}
     {/each}
   </svg>
