@@ -3,6 +3,7 @@
   import { type ScaleSequential } from "d3-scale";
   import type { FeatureCollection } from "geojson";
   import Region from "./Region.svelte";
+  import Tooltip from "./Tooltip.svelte";
 
   interface Props {
     data: FeatureCollection;
@@ -18,6 +19,8 @@
   let w = $state(0);
   let h = $state(0);
 
+  let tooltipRegion = $state();
+
   //PROJECTION
   let projection = $derived(
     geoMercator()
@@ -29,6 +32,10 @@
 
   //PATH GENERATOR PROJECTION
   let pathGenerator = $derived(geoPath().projection(projection));
+
+  let setTooltip = function (id: number) {
+    tooltipRegion = id;
+  };
 </script>
 
 <div bind:clientHeight={h} bind:clientWidth={w} class="w-full max-w-[1020px] h-fit max-h-[550px]">
@@ -46,14 +53,23 @@
     </defs>
     {#each data.features as feature}
       {#if feature.properties}
-        <Region
-          {feature}
-          {activePovertyLevel}
-          {activeTemperatureLevel}
-          {filterActive}
-          {heatScale}
-          {pathGenerator}
-        ></Region>
+        <g
+          onclick={() => setTooltip(feature.properties!.PLR_ID)}
+          tabindex="0"
+          role="button"
+          aria-label="tooltip"
+          onkeydown={() => setTooltip(feature.properties!.PLR_ID)}
+        >
+          {#if tooltipRegion == feature.properties.PLR_ID}<Tooltip {feature}></Tooltip>{/if}
+          <Region
+            {feature}
+            {activePovertyLevel}
+            {activeTemperatureLevel}
+            {filterActive}
+            {heatScale}
+            {pathGenerator}
+          ></Region>
+        </g>
       {/if}
     {/each}
   </svg>
