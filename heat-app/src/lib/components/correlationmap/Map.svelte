@@ -32,7 +32,7 @@
   let pathGenerator = $derived(geoPath().projection(projection));
 
   //tooltip
-  let tooltipRegionID: undefined | number = $state();
+  let tooltipRegionID: null | number = $state(null);
 
   let tooltipRegion = $derived(
     data.features.find((d: Feature) => d.properties && d.properties.PLR_ID == tooltipRegionID)
@@ -45,7 +45,7 @@
 
   let closeTooltip = function () {
     console.log("close");
-    tooltipRegionID = undefined;
+    tooltipRegionID = null;
   };
 </script>
 
