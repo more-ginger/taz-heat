@@ -19,12 +19,13 @@
 
   let w = $state(0);
   let h = $state(0);
-
+  let scaleRatio = $derived(w <= 400 ? 31000 : 52000)
+  
   //PROJECTION
   let projection = $derived(
     geoMercator()
       .fitSize([w, h], data)
-      .scale(52000) // manual scaling
+      .scale(scaleRatio) // manual scaling
       .center([13.42, 52.5])
       .translate([w / 2, h / 2])
   );
