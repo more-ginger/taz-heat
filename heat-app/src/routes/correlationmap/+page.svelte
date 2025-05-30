@@ -38,7 +38,7 @@
       <span class="font-bold">poverty</span> in Berlin
     </h1>
     <FilterMenu bind:filterActive bind:activePovertyLevel bind:activeTemperatureLevel></FilterMenu>
-    <Legend {heatDomain} {heatScale}></Legend>
+    <Legend heatDomain={[heatMin, heatMax]} {heatScale}></Legend>
   </div>
   <Map {data} {activePovertyLevel} {activeTemperatureLevel} {filterActive} {heatScale}></Map>
 </div>
