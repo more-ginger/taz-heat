@@ -27,6 +27,11 @@
   // Redid interpolation to add the ivory color as mid-point
   let heatColors = piecewise(interpolateRgb, ["#005AF5", "#F9EFE3", "#FF0000"]);
   let heatScale = $derived(scaleSequential([heatMin, heatMax], heatColors));
+
+
+  // income levels domain for legend
+  let incomeLabels =  $derived(data.features?.map((d) => d.properties?.lst_cat))
+  let incomeDomain = $derived(incomeLabels.filter((l, i) => incomeLabels.indexOf(l) === i))
 </script>
 
 <div
@@ -47,6 +52,7 @@
     <Legend 
       heatDomain={[heatMin, heatMax]} 
       {heatScale}
+      {incomeDomain}
     >
     </Legend>
   </div>

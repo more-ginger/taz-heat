@@ -5,9 +5,10 @@
   interface Props {
     heatDomain: number[];
     heatScale: (temp: number) => string;
+    incomeDomain: string[];
   }
 
-  let { heatDomain, heatScale }: Props = $props();
+  let { heatDomain, heatScale, incomeDomain }: Props = $props();
   let povertyLevels = ["Niedrig", "Mittel", "Hoch"];
 </script>
 
@@ -36,17 +37,21 @@
       <h5 class="m-2">Quote der Sozialgeldempfänger:innen:</h5>
     </div>
     <div>
-      {#each povertyLevels as level}
-        <svg width="100" height="100">
+      {#each incomeDomain as level}
+      <div class="flex">
+        <svg class="w-10 h-10">
           <Pattern/>
-          {#if level === "Hoch"}
-            <circle cx="50" cy="50" r=10 fill="url(#dots-large)" stroke="black"></circle>
-          {:else if level === "Mittel"}
-            <circle cx="50" cy="50" r=10 fill="url(#dots-medium)" stroke="black"></circle>
-          {:else if level === "Niedrig"}
-            <circle cx="50" cy="50" r=10 fill="url(#dots-small)" stroke="black"></circle>
-          {/if}
+          <circle 
+            cx="50%" 
+            cy="50%" 
+            r=10 
+            fill={`url(#dots-${level})`} 
+            stroke="black"
+          >
+          </circle> 
         </svg>
+        <h5>{level}</h5>
+      </div>
       {/each}
     </div>
   </div>
