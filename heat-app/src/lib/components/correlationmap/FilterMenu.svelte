@@ -44,7 +44,7 @@
       bind:value={activeTemperatureLevel}
       disabled={!filterActive}
     >
-      <option value="low">nierdrig</option>
+      <option value="low">niedrig</option>
       <option value="medium">mittel</option>
       <option value="high">hoch</option>
     </select>
