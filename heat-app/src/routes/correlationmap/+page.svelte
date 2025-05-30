@@ -22,8 +22,8 @@
 
   //SCALES
   // dynamic domain for heat scale
-  let heatMin = $derived(min(data.features.map((d) => d.properties?.LST)));
-  let heatMax = $derived(max(data.features.map((d) => d.properties?.LST)));
+  let heatMin = $derived(Math.round(min(data.features.map((d) => d.properties?.LST))));
+  let heatMax = $derived(Math.round(max(data.features.map((d) => d.properties?.LST))));
   // Redid interpolation to add the ivory color as mid-point
   let heatColors = piecewise(interpolateRgb, ["#005AF5", "#F9EFE3", "#FF0000"]);
   let heatScale = $derived(scaleSequential([heatMin, heatMax], heatColors));
