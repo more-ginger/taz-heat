@@ -9,11 +9,10 @@
   }
 
   let { heatDomain, heatScale, incomeDomain }: Props = $props();
-  let povertyLevels = ["Niedrig", "Mittel", "Hoch"];
 </script>
 
-<div class="md:flex bg-red-100">
-  <div class="bg-green-100">
+<div class="md:flex">
+  <div>
     <div>
       <h5 class="m-2">
         Durschnittliche Oberflächentemperatur:
@@ -22,7 +21,7 @@
     <div>
       <div class="flex w-full md:gap-0.5 md:flex-col">
         {#each range(heatDomain[0], heatDomain[1], 1) as temp}
-          <div class="w-full flex flex-row items-center md:pl-1 gap-1">
+          <div class="w-full md:flex md:flex-row md:items-center md:pl-1 md:gap-1">
             <div class="w-full h-4 border border-white md:w-8" style="background:{heatScale(temp)}"></div>
             <h5 class={`${temp === 39 || temp === 28 ? "block" : "hidden"}`}>
               {temp}°C
@@ -32,11 +31,11 @@
       </div>
     </div>
   </div>
-  <div class="bg-purple-100">
+  <div>
     <div>
       <h5 class="m-2">Quote der Sozialgeldempfänger:innen:</h5>
     </div>
-    <div>
+    <div class="flex md:block">
       {#each incomeDomain as level}
       <div class="flex">
         <svg class="w-10 h-10">
@@ -50,7 +49,7 @@
           >
           </circle> 
         </svg>
-        <h5>{level}</h5>
+        <h5 class="leading-10">{level}</h5>
       </div>
       {/each}
     </div>
