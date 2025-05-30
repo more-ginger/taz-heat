@@ -13,3 +13,10 @@
 h5 {
     font-size: 12px;
 }
+
+.quelle {
+    font-size: 10px;
+    font-style: italic;
+    color: var(--color-gray-700);
+    background-color: white;
+}

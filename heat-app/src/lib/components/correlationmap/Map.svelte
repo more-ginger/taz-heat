@@ -53,7 +53,7 @@
 <div 
   bind:clientHeight={h} 
   bind:clientWidth={w} 
-  class="w-full h-fit max-h-[400px] md:max-h-[600px]"
+  class="w-full relative h-dvh max-h-[400px] md:max-h-[600px]"
 >
   <svg
     width={w}
@@ -84,5 +84,5 @@
       <Tooltip feature={tooltipRegion} centroid={pathGenerator.centroid(tooltipRegion)}></Tooltip>
     {/if}
   </svg>
-  <div class="text-end">Quelle: XYZ</div>
+  <div class="quelle text-end absolute w-68 bottom-0 right-0">Quelle: A very long string of text with some name because I need to check the behaviour</div>
 </div>

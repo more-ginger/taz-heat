@@ -29,7 +29,8 @@
       border 
       border-gray-200 
       m-2
-      text-sm`
+      text-sm
+      rounded-sm`
     }>
     <div class="pr-2">Nach:</div>
     <div>
