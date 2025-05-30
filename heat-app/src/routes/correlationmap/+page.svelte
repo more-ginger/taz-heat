@@ -30,15 +30,34 @@
 </script>
 
 <div
-  class="max-w-[1020px] max-h-[689px] m-auto flex flex-col md:flex-row p-5 border-1 border-black mt-20"
+  class="w-full max-w-[1020px] md:max-h-[689px] m-auto flex flex-col md:flex-row p-5 border-1 border-black mt-20"
 >
-  <div class="flex flex-col gap-5">
-    <h1 class="text-2xl w-60">
-      Correlation between average <span class="font-bold text-red-500">temperature</span> and
+  <div class="md:w-2/6 flex flex-col mr-8 md:gap-5 bg-yellow-100">
+    <h1 class="text-2xl md:w-68">
+      Correlation between average 
+      <span class="font-bold text-red-500">temperature</span> and
       <span class="font-bold">poverty</span> in Berlin
     </h1>
-    <FilterMenu bind:filterActive bind:activePovertyLevel bind:activeTemperatureLevel></FilterMenu>
-    <Legend heatDomain={[heatMin, heatMax]} {heatScale}></Legend>
+    <FilterMenu 
+      bind:filterActive 
+      bind:activePovertyLevel 
+      bind:activeTemperatureLevel
+    >
+    </FilterMenu>
+    <Legend 
+      heatDomain={[heatMin, heatMax]} 
+      {heatScale}
+    >
+    </Legend>
   </div>
-  <Map {data} {activePovertyLevel} {activeTemperatureLevel} {filterActive} {heatScale}></Map>
+  <div class="md:w-4/6">
+    <Map 
+      {data} 
+      {activePovertyLevel} 
+      {activeTemperatureLevel} 
+      {filterActive} 
+      {heatScale}
+    >
+    </Map>
+  </div>
 </div>

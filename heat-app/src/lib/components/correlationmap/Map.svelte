@@ -4,6 +4,7 @@
   import type { Feature, FeatureCollection } from "geojson";
   import Region from "./Region.svelte";
   import Tooltip from "./Tooltip.svelte";
+  import Pattern from "./Pattern.svelte";
 
   interface Props {
     data: FeatureCollection;
@@ -23,8 +24,8 @@
   let projection = $derived(
     geoMercator()
       .fitSize([w, h], data)
-      .scale(50000) // manual scaling
-      .center([13.4, 52.5])
+      .scale(52000) // manual scaling
+      .center([13.42, 52.5])
       .translate([w / 2, h / 2])
   );
 
@@ -49,7 +50,11 @@
   };
 </script>
 
-<div bind:clientHeight={h} bind:clientWidth={w} class="w-full max-w-[1020px] h-fit max-h-[550px]">
+<div 
+  bind:clientHeight={h} 
+  bind:clientWidth={w} 
+  class="w-full h-fit max-h-[400px] md:max-h-[600px]"
+>
   <svg
     width={w}
     height={h}
@@ -59,17 +64,7 @@
     aria-label="close tooltip"
     onkeydown={closeTooltip}
   >
-    <defs>
-      <pattern id="dots-large" patternUnits="userSpaceOnUse" width="4" height="4">
-        <circle cx="2" cy="2" r="1.25" fill="currentColor" />
-      </pattern>
-      <pattern id="dots-medium" patternUnits="userSpaceOnUse" width="4" height="4">
-        <circle cx="2" cy="2" r="0.75" fill="currentColor" />
-      </pattern>
-      <pattern id="dots-small" patternUnits="userSpaceOnUse" width="4" height="4">
-        <circle cx="2" cy="2" r="0.25" fill="currentColor" />
-      </pattern>
-    </defs>
+    <Pattern />
     {#each data.features as feature}
       {#if feature.properties}
         <Region
