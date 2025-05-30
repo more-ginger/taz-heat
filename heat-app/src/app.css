@@ -2,7 +2,7 @@
 @plugin '@tailwindcss/typography';
 
 @theme{
-    --color-pink: #D50D2E;
+    --color-pink: #F40000;
     --color-pink-light: #F5748A;
     --color-blue:#98C3FA;
     --color-beige:#F7EAD4;

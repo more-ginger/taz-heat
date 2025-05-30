@@ -3,8 +3,9 @@
   import Map from "$lib/components/correlationmap/Map.svelte";
   import type { FeatureCollection } from "geojson";
   import { scaleSequential } from "d3-scale";
+  import {min, max} from "d3-array";
   import Legend from "$lib/components/correlationmap/Legend.svelte";
-  import { interpolateRgbBasis } from "d3-interpolate";
+  import { piecewise, interpolateRgb } from "d3-interpolate";
 
   //I needed to rewind the data here
   //https://observablehq.com/@saneef/fix-geojson
@@ -20,9 +21,12 @@
   let activeTemperatureLevel = $state("low");
 
   //SCALES
-  let heatDomain = [28, 39];
-  let heatColors = interpolateRgbBasis(["#007AF5", "#F9EFE3", "#F40000"]);
-  let heatScale = $derived(scaleSequential(heatDomain, heatColors));
+  // dynamic domain for heat scale
+  let heatMin = $derived(min(data.features.map((d) => d.properties?.LST)));
+  let heatMax = $derived(max(data.features.map((d) => d.properties?.LST)));
+  // Redid interpolation to add the ivory color as mid-point
+  let heatColors = piecewise(interpolateRgb, ["#005AF5", "#F9EFE3", "#FF0000"]);
+  let heatScale = $derived(scaleSequential([heatMin, heatMax], heatColors));
 </script>
 
 <div
