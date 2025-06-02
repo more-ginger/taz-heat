@@ -4,7 +4,7 @@
   import type { Feature, FeatureCollection } from "geojson";
   import Region from "./Region.svelte";
   import Tooltip from "./Tooltip.svelte";
-  import { zoom } from "d3-zoom";
+  import { zoom, zoomIdentity } from "d3-zoom";
   import { select } from "d3-selection";
   import Pattern from "./Pattern.svelte";
 
@@ -53,6 +53,20 @@
       })
   );
 
+  function zoomIn() {
+    select(svgElement).transition().call(zoomMap.scaleBy, 1.2);
+  }
+
+  function zoomOut() {
+    select(svgElement)
+      .transition()
+      .call(zoomMap.scaleBy, 1 / 1.2);
+  }
+
+  function resetZoom() {
+    select(svgElement).transition().call(zoomMap.transform, zoomIdentity);
+  }
+
   $effect(() => {
     //call zoom functionality on mount
     if (svgElement) {
@@ -78,6 +92,11 @@
   };
 </script>
 
+<div class="flex flex-row gap-2 justify-end">
+  <button onclick={zoomOut}>-</button>
+  <button onclick={zoomIn}>+</button>
+  <button onclick={resetZoom}>Reset Zoom</button>
+</div>
 <div
   bind:clientHeight={h}
   bind:clientWidth={w}
