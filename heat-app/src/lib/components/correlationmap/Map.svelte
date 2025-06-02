@@ -5,6 +5,7 @@
   import Region from "./Region.svelte";
   import Tooltip from "./Tooltip.svelte";
   import { zoom } from "d3-zoom";
+  import { select } from "d3-selection";
   import Pattern from "./Pattern.svelte";
 
   interface Props {
@@ -21,8 +22,7 @@
   let w = $state(0);
   let h = $state(0);
 
-  let svgElement = $state() as SVGElement;
-  let svgGroupElement = $state() as SVGGElement;
+  let svgElement = $state() as Element;
 
   let scaleRatio = $derived(w <= 400 ? 31000 : 52000);
 
@@ -39,16 +39,25 @@
   let pathGenerator = $derived(geoPath().projection(projection));
 
   //zoom
-
   let zoomTransform = $state("");
 
-  const zoomMap = zoom().on("zoom", (event: any) => {
-    const { x, y, k } = event.transform;
-    zoomTransform = `translate(${x},${y}) scale(${k})`;
-  });
+  const zoomMap = $derived(
+    zoom()
+      .translateExtent([
+        [-200, -200],
+        [w, h],
+      ])
+      .scaleExtent([1, 4])
+      .on("zoom", ({ transform }) => {
+        zoomTransform = transform;
+      })
+  );
 
   $effect(() => {
-    zoomMap(svgElement as any);
+    //call zoom functionality on mount
+    if (svgElement) {
+      select(svgElement).call(zoomMap);
+    }
   });
 
   //tooltip
