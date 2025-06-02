@@ -4,6 +4,7 @@
   import type { Feature, FeatureCollection } from "geojson";
   import Region from "./Region.svelte";
   import Tooltip from "./Tooltip.svelte";
+  import { zoom } from "d3-zoom";
 
   interface Props {
     data: FeatureCollection;
@@ -19,6 +20,9 @@
   let w = $state(0);
   let h = $state(0);
 
+  let svgElement = $state() as SVGElement;
+  let svgGroupElement = $state() as SVGGElement;
+
   //PROJECTION
   let projection = $derived(
     geoMercator()
@@ -30,6 +34,19 @@
 
   //PATH GENERATOR PROJECTION
   let pathGenerator = $derived(geoPath().projection(projection));
+
+  //zoom
+
+  let zoomTransform = $state("");
+
+  const zoomMap = zoom().on("zoom", (event: any) => {
+    const { x, y, k } = event.transform;
+    zoomTransform = `translate(${x},${y}) scale(${k})`;
+  });
+
+  $effect(() => {
+    zoomMap(svgElement as any);
+  });
 
   //tooltip
   let tooltipRegionID: undefined | number = $state();
@@ -51,6 +68,7 @@
 
 <div bind:clientHeight={h} bind:clientWidth={w} class="w-full max-w-[1020px] h-fit max-h-[550px]">
   <svg
+    bind:this={svgElement}
     width={w}
     height={h}
     onclick={closeTooltip}
@@ -70,21 +88,23 @@
         <circle cx="2" cy="2" r="0.25" fill="currentColor" />
       </pattern>
     </defs>
-    {#each data.features as feature}
-      {#if feature.properties}
-        <Region
-          regionHighlighted={!filterActive ||
-            (filterActive &&
-              feature.properties.lst_cat == activeTemperatureLevel &&
-              feature.properties.sgb_cat == activePovertyLevel)}
-          {feature}
-          path={pathGenerator(feature)}
-          {heatScale}
-          {setTooltip}
-          {closeTooltip}
-        ></Region>
-      {/if}
-    {/each}
+    <g transform={zoomTransform}>
+      {#each data.features as feature}
+        {#if feature.properties}
+          <Region
+            regionHighlighted={!filterActive ||
+              (filterActive &&
+                feature.properties.lst_cat == activeTemperatureLevel &&
+                feature.properties.sgb_cat == activePovertyLevel)}
+            {feature}
+            path={pathGenerator(feature)}
+            {heatScale}
+            {setTooltip}
+            {closeTooltip}
+          ></Region>
+        {/if}
+      {/each}
+    </g>
     {#if tooltipRegion}
       <Tooltip feature={tooltipRegion} centroid={pathGenerator.centroid(tooltipRegion)}></Tooltip>
     {/if}
