@@ -5,6 +5,7 @@
   import Region from "./Region.svelte";
   import Tooltip from "./Tooltip.svelte";
   import { zoom } from "d3-zoom";
+  import Pattern from "./Pattern.svelte";
 
   interface Props {
     data: FeatureCollection;
@@ -23,12 +24,14 @@
   let svgElement = $state() as SVGElement;
   let svgGroupElement = $state() as SVGGElement;
 
+  let scaleRatio = $derived(w <= 400 ? 31000 : 52000);
+
   //PROJECTION
   let projection = $derived(
     geoMercator()
       .fitSize([w, h], data)
-      .scale(50000) // manual scaling
-      .center([13.4, 52.5])
+      .scale(scaleRatio) // manual scaling
+      .center([13.42, 52.5])
       .translate([w / 2, h / 2])
   );
 
@@ -49,7 +52,7 @@
   });
 
   //tooltip
-  let tooltipRegionID: undefined | number = $state();
+  let tooltipRegionID: null | number = $state(null);
 
   let tooltipRegion = $derived(
     data.features.find((d: Feature) => d.properties && d.properties.PLR_ID == tooltipRegionID)
@@ -62,11 +65,15 @@
 
   let closeTooltip = function () {
     console.log("close");
-    tooltipRegionID = undefined;
+    tooltipRegionID = null;
   };
 </script>
 
-<div bind:clientHeight={h} bind:clientWidth={w} class="w-full max-w-[1020px] h-fit max-h-[550px]">
+<div
+  bind:clientHeight={h}
+  bind:clientWidth={w}
+  class="w-full relative h-dvh max-h-[400px] md:max-h-[600px]"
+>
   <svg
     bind:this={svgElement}
     width={w}
@@ -77,17 +84,7 @@
     aria-label="close tooltip"
     onkeydown={closeTooltip}
   >
-    <defs>
-      <pattern id="dots-large" patternUnits="userSpaceOnUse" width="4" height="4">
-        <circle cx="2" cy="2" r="1.25" fill="currentColor" />
-      </pattern>
-      <pattern id="dots-medium" patternUnits="userSpaceOnUse" width="4" height="4">
-        <circle cx="2" cy="2" r="0.75" fill="currentColor" />
-      </pattern>
-      <pattern id="dots-small" patternUnits="userSpaceOnUse" width="4" height="4">
-        <circle cx="2" cy="2" r="0.25" fill="currentColor" />
-      </pattern>
-    </defs>
+    <Pattern />
     <g transform={zoomTransform}>
       {#each data.features as feature}
         {#if feature.properties}
@@ -109,5 +106,7 @@
       <Tooltip feature={tooltipRegion} centroid={pathGenerator.centroid(tooltipRegion)}></Tooltip>
     {/if}
   </svg>
-  <div class="text-end">Quelle: XYZ</div>
+  <div class="quelle text-end absolute w-68 bottom-0 right-0">
+    Quelle: A very long string of text with some name because I need to check the behaviour
+  </div>
 </div>

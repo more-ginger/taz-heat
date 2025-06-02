@@ -2,10 +2,21 @@
 @plugin '@tailwindcss/typography';
 
 @theme{
-    --color-pink: #D50D2E;
+    --color-pink: #F40000;
     --color-pink-light: #F5748A;
     --color-blue:#98C3FA;
     --color-beige:#F7EAD4;
     --color-orange-light:#FBBA72;
     --color-orange:#D17000;
+}
+
+h5 {
+    font-size: 12px;
+}
+
+.quelle {
+    font-size: 10px;
+    font-style: italic;
+    color: var(--color-gray-700);
+    background-color: white;
 }

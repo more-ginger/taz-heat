@@ -35,11 +35,11 @@
     >
     </path>
     {#if feature.properties.sgb_cat == "high"}
-      <path d={path} fill="url(#dots-large)" {opacity}></path>
+      <path d={path} fill="url(#dots-high)" {opacity}></path>
     {:else if feature.properties.sgb_cat == "medium"}
       <path d={path} fill="url(#dots-medium)" {opacity}></path>
     {:else if feature.properties.sgb_cat == "low"}
-      <path d={path} fill="url(#dots-small)" {opacity}> </path>
+      <path d={path} fill="url(#dots-low)" {opacity}> </path>
     {/if}
   </g>
 {/if}
