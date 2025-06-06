@@ -126,6 +126,7 @@
             {heatScale}
             {setTooltip}
             {closeTooltip}
+            {tooltipRegion}
           ></Region>
         {/if}
       {/each}
