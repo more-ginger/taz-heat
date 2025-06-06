@@ -4,6 +4,8 @@
   import type { Feature, FeatureCollection } from "geojson";
   import Region from "./Region.svelte";
   import Tooltip from "./Tooltip.svelte";
+  import { zoom, zoomIdentity } from "d3-zoom";
+  import { select } from "d3-selection";
   import Pattern from "./Pattern.svelte";
 
   interface Props {
@@ -19,8 +21,11 @@
 
   let w = $state(0);
   let h = $state(0);
-  let scaleRatio = $derived(w <= 400 ? 31000 : 52000)
-  
+
+  let svgElement = $state() as Element;
+
+  let scaleRatio = $derived(w <= 400 ? 31000 : 52000);
+
   //PROJECTION
   let projection = $derived(
     geoMercator()
@@ -32,6 +37,42 @@
 
   //PATH GENERATOR PROJECTION
   let pathGenerator = $derived(geoPath().projection(projection));
+
+  //zoom
+  let zoomTransform = $state("");
+
+  const zoomMap = $derived(
+    zoom()
+      .translateExtent([
+        [-200, -200],
+        [w, h],
+      ])
+      .scaleExtent([1, 4])
+      .on("zoom", ({ transform }) => {
+        zoomTransform = transform;
+      })
+  );
+
+  function zoomIn() {
+    select(svgElement).transition().call(zoomMap.scaleBy, 1.2);
+  }
+
+  function zoomOut() {
+    select(svgElement)
+      .transition()
+      .call(zoomMap.scaleBy, 1 / 1.2);
+  }
+
+  function resetZoom() {
+    select(svgElement).transition().call(zoomMap.transform, zoomIdentity);
+  }
+
+  $effect(() => {
+    //call zoom functionality on mount
+    if (svgElement) {
+      select(svgElement).call(zoomMap);
+    }
+  });
 
   //tooltip
   let tooltipRegionID: null | number = $state(null);
@@ -51,12 +92,18 @@
   };
 </script>
 
-<div 
-  bind:clientHeight={h} 
-  bind:clientWidth={w} 
+<div class="flex flex-row gap-2 justify-end">
+  <button onclick={zoomOut}>-</button>
+  <button onclick={zoomIn}>+</button>
+  <button onclick={resetZoom}>Reset Zoom</button>
+</div>
+<div
+  bind:clientHeight={h}
+  bind:clientWidth={w}
   class="w-full relative h-dvh max-h-[400px] md:max-h-[600px]"
 >
   <svg
+    bind:this={svgElement}
     width={w}
     height={h}
     onclick={closeTooltip}
@@ -66,24 +113,28 @@
     onkeydown={closeTooltip}
   >
     <Pattern />
-    {#each data.features as feature}
-      {#if feature.properties}
-        <Region
-          regionHighlighted={!filterActive ||
-            (filterActive &&
-              feature.properties.lst_cat == activeTemperatureLevel &&
-              feature.properties.sgb_cat == activePovertyLevel)}
-          {feature}
-          path={pathGenerator(feature)}
-          {heatScale}
-          {setTooltip}
-          {closeTooltip}
-        ></Region>
-      {/if}
-    {/each}
+    <g transform={zoomTransform}>
+      {#each data.features as feature}
+        {#if feature.properties}
+          <Region
+            regionHighlighted={!filterActive ||
+              (filterActive &&
+                feature.properties.lst_cat == activeTemperatureLevel &&
+                feature.properties.sgb_cat == activePovertyLevel)}
+            {feature}
+            path={pathGenerator(feature)}
+            {heatScale}
+            {setTooltip}
+            {closeTooltip}
+          ></Region>
+        {/if}
+      {/each}
+    </g>
     {#if tooltipRegion}
       <Tooltip feature={tooltipRegion} centroid={pathGenerator.centroid(tooltipRegion)}></Tooltip>
     {/if}
   </svg>
-  <div class="quelle text-end absolute w-68 bottom-0 right-0">Quelle: A very long string of text with some name because I need to check the behaviour</div>
+  <div class="quelle text-end absolute w-68 bottom-0 right-0">
+    Quelle: A very long string of text with some name because I need to check the behaviour
+  </div>
 </div>
