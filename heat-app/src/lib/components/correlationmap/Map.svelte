@@ -87,7 +87,6 @@
   };
 
   let closeTooltip = function () {
-    console.log("close");
     tooltipRegionID = null;
   };
 </script>
@@ -122,16 +121,25 @@
                 feature.properties.lst_cat == activeTemperatureLevel &&
                 feature.properties.sgb_cat == activePovertyLevel)}
             {feature}
+            {filterActive}
             path={pathGenerator(feature)}
             {heatScale}
             {setTooltip}
             {closeTooltip}
+            {tooltipRegion}
           ></Region>
         {/if}
       {/each}
     </g>
     {#if tooltipRegion}
-      <Tooltip feature={tooltipRegion} centroid={pathGenerator.centroid(tooltipRegion)}></Tooltip>
+      <Tooltip
+        feature={tooltipRegion}
+        centroid={pathGenerator.centroid(tooltipRegion)}
+        isTooltipActive={!filterActive ||
+          (filterActive &&
+            tooltipRegion.properties?.lst_cat == activeTemperatureLevel &&
+            tooltipRegion.properties?.sgb_cat == activePovertyLevel)}
+      ></Tooltip>
     {/if}
   </svg>
   <div class="quelle text-end absolute w-68 bottom-0 right-0">

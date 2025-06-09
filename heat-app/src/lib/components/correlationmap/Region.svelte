@@ -9,10 +9,20 @@
     regionHighlighted: boolean;
     setTooltip: (e: Event, id: number) => void;
     closeTooltip: () => void;
+    tooltipRegion: { properties: { Name: string } };
   }
 
-  let { feature, path, heatScale, regionHighlighted, setTooltip, closeTooltip }: Props = $props();
+  let {
+    feature,
+    path,
+    heatScale,
+    regionHighlighted,
+    setTooltip,
+    closeTooltip,
+    tooltipRegion,
+  }: Props = $props();
 
+  let tooltipRegionName = $derived(tooltipRegion?.properties.Name || null);
   let opacity = $derived(regionHighlighted ? 1.0 : 0.1);
 </script>
 
@@ -29,7 +39,12 @@
     <path
       d={path}
       id={feature.properties.Name}
-      class="stroke-black stroke-[0.5]"
+      class={`
+        stroke-black 
+        stroke-[0.5] 
+        ${tooltipRegionName !== feature.properties.Name && tooltipRegionName && "opacity-20"}
+        ${tooltipRegionName == feature.properties.Name && regionHighlighted && "stroke-[2]"}
+      `}
       fill={heatScale(feature.properties.LST)}
       {opacity}
     >
