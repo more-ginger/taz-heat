@@ -10,28 +10,33 @@
   //I needed to rewind the data here
   //https://observablehq.com/@saneef/fix-geojson
   interface Props {
-    data: FeatureCollection;
+    data: { geodata: FeatureCollection; temperatureParam: string; povertyParam: string };
   }
 
   let { data }: Props = $props();
 
+  let geodata = $derived(data.geodata);
+
+  $inspect(data.temperatureParam);
+
   //filter menu values
   let filterActive = $state(false);
-  let activePovertyLevel = $state("low");
-  let activeTemperatureLevel = $state("low");
+  let activePovertyLevel = $state(data.povertyParam);
+  let activeTemperatureLevel = $state(data.temperatureParam);
+
+  $inspect(activeTemperatureLevel);
 
   //SCALES
   // dynamic domain for heat scale
-  let heatMin = $derived(Math.round(min(data.features.map((d) => d.properties?.LST))));
-  let heatMax = $derived(Math.round(max(data.features.map((d) => d.properties?.LST))));
+  let heatMin = $derived(Math.round(min(geodata.features.map((d) => d.properties?.LST))));
+  let heatMax = $derived(Math.round(max(geodata.features.map((d) => d.properties?.LST))));
   // Redid interpolation to add the ivory color as mid-point
   let heatColors = piecewise(interpolateRgb, ["#005AF5", "#F9EFE3", "#FF0000"]);
   let heatScale = $derived(scaleSequential([heatMin, heatMax], heatColors));
 
-
   // income levels domain for legend
-  let incomeLabels =  $derived(data.features?.map((d) => d.properties?.lst_cat))
-  let incomeDomain = $derived(incomeLabels.filter((l, i) => incomeLabels.indexOf(l) === i))
+  let incomeLabels = $derived(geodata.features?.map((d) => d.properties?.lst_cat));
+  let incomeDomain = $derived(incomeLabels.filter((l, i) => incomeLabels.indexOf(l) === i));
 </script>
 
 <div
@@ -57,13 +62,7 @@
     </Legend>
   </div>
   <div class="md:w-4/6">
-    <Map 
-      {data} 
-      {activePovertyLevel} 
-      {activeTemperatureLevel} 
-      {filterActive} 
-      {heatScale}
-    >
-    </Map>
+    <Map data={geodata} {activePovertyLevel} {activeTemperatureLevel} {filterActive} {heatScale}
+    ></Map>
   </div>
 </div>
