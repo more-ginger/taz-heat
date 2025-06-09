@@ -83,7 +83,6 @@
 
   let setTooltip = function (e: Event, id: number) {
     e.stopPropagation();
-    console.log(id);
     tooltipRegionID = id;
   };
 
