@@ -87,7 +87,6 @@
   };
 
   let closeTooltip = function () {
-    // console.log("close");
     tooltipRegionID = null;
   };
 </script>
