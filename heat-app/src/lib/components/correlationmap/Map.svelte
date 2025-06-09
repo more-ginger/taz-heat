@@ -24,7 +24,8 @@
 
   let svgElement = $state() as Element;
 
-  let scaleRatio = $derived(w <= 400 ? 31000 : 52000);
+  // Reactive switch case using $derived
+  let scaleRatio = $derived(w <= 500 ? 29000 : w <= 620 ? 45000 : 57000);
 
   //PROJECTION
   let projection = $derived(

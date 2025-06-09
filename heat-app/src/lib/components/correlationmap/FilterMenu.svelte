@@ -27,7 +27,7 @@
   <h1 class="font-semibold">Filter</h1>
   <div class="flex flex-col p-2 border border-gray-200 text-sm rounded-sm">
     <div>
-      <label for="poverty">Armuts Quote</label>
+      <label for="poverty">Armutsquote</label>
       <select class="underline" name="poverty" bind:value={activePovertyLevel}>
         <option value="all">alle anzeigen</option>
         <option value="low">niedrig</option>
@@ -36,7 +36,7 @@
       </select>
     </div>
     <div>
-      <label for="temperature">Oberflächentemperatur:</label>
+      <label for="temperature">Temperatur:</label>
       <select class="underline" name="temperature" bind:value={activeTemperatureLevel}>
         <option value="all">alle anzeigen</option>
         <option value="low">niedrig</option>
