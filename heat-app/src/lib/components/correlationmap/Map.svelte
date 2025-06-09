@@ -7,6 +7,7 @@
   import { zoom, zoomIdentity } from "d3-zoom";
   import { select } from "d3-selection";
   import Pattern from "./Pattern.svelte";
+  import ZoomMenu from "./ZoomMenu.svelte";
 
   interface Props {
     data: FeatureCollection;
@@ -32,7 +33,7 @@
     geoMercator()
       .fitSize([w, h], data)
       .scale(scaleRatio) // manual scaling
-      .center([13.42, 52.5])
+      .center([13.3, 52.5])
       .translate([w / 2, h / 2])
   );
 
@@ -102,16 +103,12 @@
   }
 </script>
 
-<div class="flex flex-row gap-2 justify-end">
-  <button onclick={zoomOut}>-</button>
-  <button onclick={zoomIn}>+</button>
-  <button onclick={resetZoom}>Reset Zoom</button>
-</div>
 <div
   bind:clientHeight={h}
   bind:clientWidth={w}
   class="w-full relative h-dvh max-h-[400px] md:max-h-[600px]"
 >
+  <ZoomMenu {zoomIn} {zoomOut} {resetZoom}></ZoomMenu>
   <svg
     bind:this={svgElement}
     width={w}
@@ -121,6 +118,7 @@
     role="button"
     aria-label="close tooltip"
     onkeydown={closeTooltip}
+    class="relative"
   >
     <Pattern />
     <g transform={zoomTransform}>
@@ -146,4 +144,7 @@
       ></Tooltip>
     {/if}
   </svg>
+  <div class="absolute bottom-0 right-0 text-gray-600 italic text-[10px] p-5">
+    Quelle: A very long string of text with some name because I need to check the behaviour
+  </div>
 </div>

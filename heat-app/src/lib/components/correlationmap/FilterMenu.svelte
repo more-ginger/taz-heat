@@ -23,26 +23,23 @@
   });
 </script>
 
-<div class="flex flex-col py-2">
-  <h1 class="font-semibold">Filter</h1>
-  <div class="flex flex-col p-2 border border-gray-200 text-sm rounded-sm">
-    <div>
-      <label for="poverty">Armutsquote</label>
-      <select class="underline" name="poverty" bind:value={activePovertyLevel}>
-        <option value="all">alle anzeigen</option>
-        <option value="low">niedrig</option>
-        <option value="medium">mittel</option>
-        <option value="high">hoch</option>
-      </select>
-    </div>
-    <div>
-      <label for="temperature">Temperatur:</label>
-      <select class="underline" name="temperature" bind:value={activeTemperatureLevel}>
-        <option value="all">alle anzeigen</option>
-        <option value="low">niedrig</option>
-        <option value="medium">mittel</option>
-        <option value="high">hoch</option>
-      </select>
-    </div>
+<div class="flex flex-col text-sm gap-2.5">
+  <div class="bg-white rounded-sm p-1 border-1 size-fit">
+    <label for="poverty">Armutsquote</label>
+    <select class="underline cursor-pointer" name="poverty" bind:value={activePovertyLevel}>
+      <option value="all">alle anzeigen</option>
+      <option value="low">niedrig</option>
+      <option value="medium">mittel</option>
+      <option value="high">hoch</option>
+    </select>
+  </div>
+  <div class="bg-white rounded-sm p-1 border-1 size-fit">
+    <label for="temperature cursor-pointer">Temperatur:</label>
+    <select class="underline" name="temperature" bind:value={activeTemperatureLevel}>
+      <option value="all">alle anzeigen</option>
+      <option value="low">niedrig</option>
+      <option value="medium">mittel</option>
+      <option value="high">hoch</option>
+    </select>
   </div>
 </div>

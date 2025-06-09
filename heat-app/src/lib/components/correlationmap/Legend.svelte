@@ -11,7 +11,7 @@
   let { heatDomain, heatScale, incomeDomain }: Props = $props();
 </script>
 
-<div class="flex flex-col">
+<div class="flex flex-col bg-white/90 rounded-sm p-2">
   <div>
     <div>
       <h5 class="my-2">Durschnittliche Oberflächentemperatur:</h5>
@@ -38,7 +38,7 @@
         <div class="flex gap-1">
           <svg class="w-5 h-5">
             <Pattern />
-            <circle cx="50%" cy="50%" r="10" fill={`url(#dots-${level})`} stroke="black"> </circle>
+            <circle cx="50%" cy="50%" r="9" fill={`url(#dots-${level})`} stroke="black"> </circle>
           </svg>
           <h5>{level}</h5>
         </div>

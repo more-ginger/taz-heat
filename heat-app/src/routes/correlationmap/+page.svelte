@@ -35,26 +35,23 @@
 </script>
 
 <div
-  class="w-full max-w-[1020px] md:max-h-[689px] m-auto flex flex-col md:flex-row p-5 border-1 border-black mt-20"
+  class="w-full max-w-[1020px] md:max-h-[689px] m-auto flex flex-col md:flex-row border-1 border-black mt-20"
 >
-  <!-- to do: add logic for sentence when we get the text from taz -->
-  <div class="md:w-2/7 flex flex-col md:mr-5 md:gap-5 justify-between">
-    <h1 class="text-2xl md:w-68">
-      Gebiete in Berlin mit
-      <span class="font-bold text-red-500">{activeTemperatureLevel} Temperatur</span> und
-      <span class="font-bold">{activePovertyLevel} Armutsquote</span> in Berlin
-    </h1>
-    <div>
+  <div class="w-full relative">
+    <!-- to do: add logic for sentence when we get the text from taz -->
+    <div class="absolute -top-0.5 -left-0.5 flex flex-col gap-5 z-10 md:max-w-76 w-fit p-5">
+      <h1 class="text-2xl bg-white/90 rounded-sm p-2">
+        Gebiete in Berlin mit
+        <span class="font-bold text-red-500">{activeTemperatureLevel} Temperatur</span> und
+        <span class="font-bold">{activePovertyLevel} Armutsquote</span> in Berlin
+      </h1>
       <FilterMenu bind:filterActive bind:activePovertyLevel bind:activeTemperatureLevel
       ></FilterMenu>
-      <Legend heatDomain={[heatMin, heatMax]} {heatScale} {incomeDomain}></Legend>
-
-      <div class="quelle mt-10">
-        Quelle: A very long string of text with some name because I need to check the behaviour
-      </div>
     </div>
-  </div>
-  <div class="md:w-5/7">
+
+    <div class="absolute bottom-0 p-5 z-10">
+      <Legend heatDomain={[heatMin, heatMax]} {heatScale} {incomeDomain}></Legend>
+    </div>
     <Map {data} {activePovertyLevel} {activeTemperatureLevel} {filterActive} {heatScale}></Map>
   </div>
 </div>
