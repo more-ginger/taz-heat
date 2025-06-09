@@ -20,20 +20,3 @@ h5 {
     color: var(--color-gray-700);
     background-color: white;
 }
-
-.tooltip {
-  background-color: rgba(255, 255, 255, 0.9);
-  text-align: center;
-  border-radius: 10px;
-  z-index: 1;
-  word-break: break-word;
-}
-
-.region-inactive {
-    fill-opacity: 0.2;
-}
-
-.region-active {
-    stroke-width: 2;
-    stroke: black;
-}

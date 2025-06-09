@@ -42,8 +42,8 @@
       class={`
         stroke-black 
         stroke-[0.5] 
-        ${tooltipRegionName !== feature.properties.Name && tooltipRegionName ? "region-inactive" : ""}
-        ${tooltipRegionName == feature.properties.Name && regionHighlighted ? "region-active" : ""}
+        ${tooltipRegionName !== feature.properties.Name && tooltipRegionName && "opacity-20"}
+        ${tooltipRegionName == feature.properties.Name && regionHighlighted && "stroke-[2]"}
       `}
       fill={heatScale(feature.properties.LST)}
       {opacity}
