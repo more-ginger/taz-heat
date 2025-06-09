@@ -1,7 +1,7 @@
 <script lang="ts">
   import { geoMercator, geoPath } from "d3-geo";
   import { type ScaleSequential } from "d3-scale";
-  import type { Feature, FeatureCollection } from "geojson";
+  import type { Feature, FeatureCollection, GeoJsonProperties } from "geojson";
   import Region from "./Region.svelte";
   import Tooltip from "./Tooltip.svelte";
   import { zoom, zoomIdentity } from "d3-zoom";
@@ -91,13 +91,12 @@
   };
 
   // Function to determine if a region should be highlighted
-  function isRegionHighlighted(feature: Feature) {
+  function isRegionHighlighted(properties: GeoJsonProperties) {
     return (
       !filterActive ||
       (filterActive &&
-        (activeTemperatureLevel === "all" ||
-          feature.properties?.lst_cat === activeTemperatureLevel) &&
-        (activePovertyLevel === "all" || feature.properties?.sgb_cat === activePovertyLevel))
+        (activeTemperatureLevel === "all" || properties?.lst_cat === activeTemperatureLevel) &&
+        (activePovertyLevel === "all" || properties?.sgb_cat === activePovertyLevel))
     );
   }
 </script>
@@ -127,14 +126,13 @@
       {#each data.features as feature}
         {#if feature.properties}
           <Region
-            regionHighlighted={isRegionHighlighted(feature)}
+            regionHighlighted={isRegionHighlighted(feature.properties)}
             {feature}
-            {filterActive}
             path={pathGenerator(feature)}
             {heatScale}
             {setTooltip}
             {closeTooltip}
-            {tooltipRegion}
+            tooltipRegionName={tooltipRegion?.properties?.Name}
           ></Region>
         {/if}
       {/each}
@@ -143,10 +141,7 @@
       <Tooltip
         feature={tooltipRegion}
         centroid={pathGenerator.centroid(tooltipRegion)}
-        isTooltipActive={!filterActive ||
-          (filterActive &&
-            tooltipRegion.properties?.lst_cat == activeTemperatureLevel &&
-            tooltipRegion.properties?.sgb_cat == activePovertyLevel)}
+        isTooltipActive={isRegionHighlighted(tooltipRegion.properties)}
       ></Tooltip>
     {/if}
   </svg>
