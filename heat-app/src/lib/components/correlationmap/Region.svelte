@@ -9,20 +9,20 @@
     regionHighlighted: boolean;
     setTooltip: (e: Event, id: number) => void;
     closeTooltip: () => void;
-    tooltipRegion: {properties:{Name:string}};
+    tooltipRegion: { properties: { Name: string } };
   }
 
-  let { 
-    feature, 
-    path, 
-    heatScale, 
-    regionHighlighted, 
-    setTooltip, 
-    closeTooltip, 
-    tooltipRegion 
+  let {
+    feature,
+    path,
+    heatScale,
+    regionHighlighted,
+    setTooltip,
+    closeTooltip,
+    tooltipRegion,
   }: Props = $props();
 
-  let tooltipRegionName = $derived(tooltipRegion?.properties.Name || null)
+  let tooltipRegionName = $derived(tooltipRegion?.properties.Name || null);
   let opacity = $derived(regionHighlighted ? 1.0 : 0.1);
 </script>
 
@@ -42,8 +42,8 @@
       class={`
         stroke-black 
         stroke-[0.5] 
-        ${tooltipRegionName !== feature.properties.Name && tooltipRegionName ? "region-inactive" : ""}
-        ${tooltipRegionName == feature.properties.Name ? "region-active" : ""}
+        ${(tooltipRegionName !== feature.properties.Name && tooltipRegionName) || !regionHighlighted ? "region-inactive" : ""}
+        ${tooltipRegionName == feature.properties.Name && regionHighlighted ? "region-active" : ""}
       `}
       fill={heatScale(feature.properties.LST)}
       {opacity}

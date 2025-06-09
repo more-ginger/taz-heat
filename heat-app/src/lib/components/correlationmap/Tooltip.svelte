@@ -4,10 +4,9 @@
   interface Props {
     feature: Feature;
     centroid: number[];
+    isTooltipActive: boolean;
   }
-  let { feature, centroid }: Props = $props();
-
-  $inspect(centroid);
+  let { feature, centroid, isTooltipActive }: Props = $props();
 
   let temperature = $derived(
     new Intl.NumberFormat("de-DE", {
@@ -25,15 +24,18 @@
   );
 </script>
 
-<foreignObject 
-  class="pointer-events-none" 
-  x={centroid[0]-75} 
-  y={centroid[1]-100} 
-  width="150" 
-  height="100"
-  ><div class="tooltip flex flex-col p-1 mt-2 border bg-white">
-    <h3 class="text-sm">{feature.properties!.Name}</h3>
-    <p class="text-xs">Temperatur: {temperature}</p>
-    <p class="text-xs">SGB-Anteil: {percentage}</p>
-  </div>
-</foreignObject>
+{#if isTooltipActive}
+  <foreignObject
+    class="pointer-events-none"
+    x={centroid[0] - 80}
+    y={centroid[1] - 90}
+    width="160"
+    height="100"
+  >
+    <div class="tooltip flex flex-col p-1 mt-2 border bg-white">
+      <h3 class="text-sm">{feature.properties!.Name}</h3>
+      <p class="text-xs">Temperatur: {temperature}</p>
+      <p class="text-xs">SGB-Anteil: {percentage}</p>
+    </div>
+  </foreignObject>
+{/if}
