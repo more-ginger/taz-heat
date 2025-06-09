@@ -146,7 +146,4 @@
       ></Tooltip>
     {/if}
   </svg>
-  <div class="quelle text-end absolute w-68 bottom-0 right-0">
-    Quelle: A very long string of text with some name because I need to check the behaviour
-  </div>
 </div>

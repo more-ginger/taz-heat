@@ -38,14 +38,21 @@
   class="w-full max-w-[1020px] md:max-h-[689px] m-auto flex flex-col md:flex-row p-5 border-1 border-black mt-20"
 >
   <!-- to do: add logic for sentence when we get the text from taz -->
-  <div class="md:w-2/7 flex flex-col md:mr-5 md:gap-5">
+  <div class="md:w-2/7 flex flex-col md:mr-5 md:gap-5 justify-between">
     <h1 class="text-2xl md:w-68">
       Gebiete in Berlin mit
       <span class="font-bold text-red-500">{activeTemperatureLevel} Temperatur</span> und
       <span class="font-bold">{activePovertyLevel} Armutsquote</span> in Berlin
     </h1>
-    <FilterMenu bind:filterActive bind:activePovertyLevel bind:activeTemperatureLevel></FilterMenu>
-    <Legend heatDomain={[heatMin, heatMax]} {heatScale} {incomeDomain}></Legend>
+    <div>
+      <FilterMenu bind:filterActive bind:activePovertyLevel bind:activeTemperatureLevel
+      ></FilterMenu>
+      <Legend heatDomain={[heatMin, heatMax]} {heatScale} {incomeDomain}></Legend>
+
+      <div class="quelle mt-10">
+        Quelle: A very long string of text with some name because I need to check the behaviour
+      </div>
+    </div>
   </div>
   <div class="md:w-5/7">
     <Map {data} {activePovertyLevel} {activeTemperatureLevel} {filterActive} {heatScale}></Map>
