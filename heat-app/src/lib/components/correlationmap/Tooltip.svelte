@@ -22,12 +22,24 @@
       style: "percent",
     }).format(feature.properties!.sgb_quote / 100)
   );
+
+  $inspect(centroid[0]);
+  // X positioning of tooltip to avoid cut-off edges
+  const xPosition = $derived.by(() => {
+    let xCentroid = centroid[0];
+    if (centroid[0] < 80) {
+      xCentroid += 80;
+    } else if (centroid[0] >= 300) {
+      xCentroid -= 80;
+    }
+    return xCentroid;
+  });
 </script>
 
 {#if isTooltipActive}
   <foreignObject
     class="pointer-events-none"
-    x={centroid[0] - 80}
+    x={xPosition - 80}
     y={centroid[1] - 90}
     width="160"
     height="100"

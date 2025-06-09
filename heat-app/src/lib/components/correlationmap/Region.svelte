@@ -42,7 +42,7 @@
       class={`
         stroke-black 
         stroke-[0.5] 
-        ${(tooltipRegionName !== feature.properties.Name && tooltipRegionName) || !regionHighlighted ? "region-inactive" : ""}
+        ${tooltipRegionName !== feature.properties.Name && tooltipRegionName ? "region-inactive" : ""}
         ${tooltipRegionName == feature.properties.Name && regionHighlighted ? "region-active" : ""}
       `}
       fill={heatScale(feature.properties.LST)}
