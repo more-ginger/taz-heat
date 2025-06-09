@@ -90,6 +90,17 @@
     console.log("close");
     tooltipRegionID = null;
   };
+
+  // Function to determine if a region should be highlighted
+  function isRegionHighlighted(feature: Feature) {
+    return (
+      !filterActive ||
+      (filterActive &&
+        (activeTemperatureLevel === "all" ||
+          feature.properties?.lst_cat === activeTemperatureLevel) &&
+        (activePovertyLevel === "all" || feature.properties?.sgb_cat === activePovertyLevel))
+    );
+  }
 </script>
 
 <div class="flex flex-row gap-2 justify-end">
@@ -117,10 +128,7 @@
       {#each data.features as feature}
         {#if feature.properties}
           <Region
-            regionHighlighted={!filterActive ||
-              (filterActive &&
-                feature.properties.lst_cat == activeTemperatureLevel &&
-                feature.properties.sgb_cat == activePovertyLevel)}
+            regionHighlighted={isRegionHighlighted(feature)}
             {feature}
             path={pathGenerator(feature)}
             {heatScale}
