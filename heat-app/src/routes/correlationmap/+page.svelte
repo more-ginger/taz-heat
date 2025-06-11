@@ -17,9 +17,12 @@
 
   //filter menu values
   // here we can set the states according to the URL params
-  let filterActive = $state(false);
   let activePovertyLevel = $state("all");
   let activeTemperatureLevel = $state("all");
+  // Derived value to update filterActive
+  let filterActive = $derived.by(() => {
+    return !(activePovertyLevel === "all" && activeTemperatureLevel === "all");
+  });
 
   //SCALES
   // dynamic domain for heat scale

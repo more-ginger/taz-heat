@@ -11,16 +11,6 @@
     activePovertyLevel = $bindable("low"),
     activeTemperatureLevel = $bindable("low"),
   }: Props = $props();
-
-  // Derived value to update filterActive
-  let filterActiveDerived = $derived.by(() => {
-    return !(activePovertyLevel === "all" && activeTemperatureLevel === "all");
-  });
-
-  // Update filterActive whenever filterActiveDerived changes
-  $effect(() => {
-    filterActive = filterActiveDerived;
-  });
 </script>
 
 <div class="flex flex-col text-sm gap-2.5">
