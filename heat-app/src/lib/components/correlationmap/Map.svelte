@@ -1,12 +1,13 @@
 <script lang="ts">
   import { geoMercator, geoPath } from "d3-geo";
   import { type ScaleSequential } from "d3-scale";
-  import type { Feature, FeatureCollection } from "geojson";
+  import type { Feature, FeatureCollection, GeoJsonProperties } from "geojson";
   import Region from "./Region.svelte";
   import Tooltip from "./Tooltip.svelte";
   import { zoom, zoomIdentity } from "d3-zoom";
   import { select } from "d3-selection";
   import Pattern from "./Pattern.svelte";
+  import ZoomMenu from "./ZoomMenu.svelte";
 
   interface Props {
     data: FeatureCollection;
@@ -24,14 +25,15 @@
 
   let svgElement = $state() as Element;
 
-  let scaleRatio = $derived(w <= 400 ? 31000 : 52000);
+  // Reactive switch case using $derived
+  let scaleRatio = $derived(w <= 500 ? 29000 : w <= 620 ? 45000 : 57000);
 
   //PROJECTION
   let projection = $derived(
     geoMercator()
       .fitSize([w, h], data)
       .scale(scaleRatio) // manual scaling
-      .center([13.42, 52.5])
+      .center([13.3, 52.5])
       .translate([w / 2, h / 2])
   );
 
@@ -87,21 +89,26 @@
   };
 
   let closeTooltip = function () {
-    console.log("close");
     tooltipRegionID = null;
   };
+
+  // Function to determine if a region should be highlighted
+  function isRegionHighlighted(properties: GeoJsonProperties) {
+    return (
+      !filterActive ||
+      (filterActive &&
+        (activeTemperatureLevel === "all" || properties?.lst_cat === activeTemperatureLevel) &&
+        (activePovertyLevel === "all" || properties?.sgb_cat === activePovertyLevel))
+    );
+  }
 </script>
 
-<div class="flex flex-row gap-2 justify-end">
-  <button onclick={zoomOut}>-</button>
-  <button onclick={zoomIn}>+</button>
-  <button onclick={resetZoom}>Reset Zoom</button>
-</div>
 <div
   bind:clientHeight={h}
   bind:clientWidth={w}
   class="w-full relative h-dvh max-h-[400px] md:max-h-[600px]"
 >
+  <ZoomMenu {zoomIn} {zoomOut} {resetZoom}></ZoomMenu>
   <svg
     bind:this={svgElement}
     width={w}
@@ -111,30 +118,33 @@
     role="button"
     aria-label="close tooltip"
     onkeydown={closeTooltip}
+    class="relative"
   >
     <Pattern />
     <g transform={zoomTransform}>
       {#each data.features as feature}
         {#if feature.properties}
           <Region
-            regionHighlighted={!filterActive ||
-              (filterActive &&
-                feature.properties.lst_cat == activeTemperatureLevel &&
-                feature.properties.sgb_cat == activePovertyLevel)}
+            regionHighlighted={isRegionHighlighted(feature.properties)}
             {feature}
             path={pathGenerator(feature)}
             {heatScale}
             {setTooltip}
             {closeTooltip}
+            tooltipRegionName={tooltipRegion?.properties?.Name}
           ></Region>
         {/if}
       {/each}
     </g>
     {#if tooltipRegion}
-      <Tooltip feature={tooltipRegion} centroid={pathGenerator.centroid(tooltipRegion)}></Tooltip>
+      <Tooltip
+        feature={tooltipRegion}
+        centroid={pathGenerator.centroid(tooltipRegion)}
+        isTooltipActive={isRegionHighlighted(tooltipRegion.properties)}
+      ></Tooltip>
     {/if}
   </svg>
-  <div class="quelle text-end absolute w-68 bottom-0 right-0">
+  <div class="absolute bottom-0 right-0 text-gray-600 italic text-[10px] p-5">
     Quelle: A very long string of text with some name because I need to check the behaviour
   </div>
 </div>
