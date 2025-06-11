@@ -23,7 +23,6 @@
     }).format(feature.properties!.sgb_quote / 100)
   );
 
-  $inspect(centroid[0]);
   // X positioning of tooltip to avoid cut-off edges
   const xPosition = $derived.by(() => {
     let xCentroid = centroid[0];

@@ -3,7 +3,7 @@
   import Map from "$lib/components/correlationmap/Map.svelte";
   import type { FeatureCollection } from "geojson";
   import { scaleSequential } from "d3-scale";
-  import {min, max} from "d3-array";
+  import { min, max } from "d3-array";
   import Legend from "$lib/components/correlationmap/Legend.svelte";
   import { piecewise, interpolateRgb } from "d3-interpolate";
 
@@ -16,9 +16,13 @@
   let { data }: Props = $props();
 
   //filter menu values
-  let filterActive = $state(false);
-  let activePovertyLevel = $state("low");
-  let activeTemperatureLevel = $state("low");
+  // here we can set the states according to the URL params
+  let activePovertyLevel = $state("all");
+  let activeTemperatureLevel = $state("all");
+  // Derived value to update filterActive
+  let filterActive = $derived.by(() => {
+    return !(activePovertyLevel === "all" && activeTemperatureLevel === "all");
+  });
 
   //SCALES
   // dynamic domain for heat scale
@@ -28,42 +32,29 @@
   let heatColors = piecewise(interpolateRgb, ["#005AF5", "#F9EFE3", "#FF0000"]);
   let heatScale = $derived(scaleSequential([heatMin, heatMax], heatColors));
 
-
   // income levels domain for legend
-  let incomeLabels =  $derived(data.features?.map((d) => d.properties?.lst_cat))
-  let incomeDomain = $derived(incomeLabels.filter((l, i) => incomeLabels.indexOf(l) === i))
+  let incomeLabels = $derived(data.features?.map((d) => d.properties?.lst_cat));
+  let incomeDomain = $derived(incomeLabels.filter((l, i) => incomeLabels.indexOf(l) === i));
 </script>
 
 <div
-  class="w-full max-w-[1020px] md:max-h-[689px] m-auto flex flex-col md:flex-row p-5 border-1 border-black mt-20"
+  class="w-full max-w-[1020px] md:max-h-[689px] m-auto flex flex-col md:flex-row border-1 border-black mt-20"
 >
-  <div class="md:w-2/6 flex flex-col md:mr-8 md:gap-5">
-    <h1 class="text-2xl md:w-68">
-      Correlation between average 
-      <span class="font-bold text-red-500">temperature</span> and
-      <span class="font-bold">poverty</span> in Berlin
-    </h1>
-    <FilterMenu 
-      bind:filterActive 
-      bind:activePovertyLevel 
-      bind:activeTemperatureLevel
-    >
-    </FilterMenu>
-    <Legend 
-      heatDomain={[heatMin, heatMax]} 
-      {heatScale}
-      {incomeDomain}
-    >
-    </Legend>
-  </div>
-  <div class="md:w-4/6">
-    <Map 
-      {data} 
-      {activePovertyLevel} 
-      {activeTemperatureLevel} 
-      {filterActive} 
-      {heatScale}
-    >
-    </Map>
+  <div class="w-full relative">
+    <!-- to do: add logic for sentence when we get the text from taz -->
+    <div class="absolute -top-0.5 -left-0.5 flex flex-col gap-5 z-10 md:max-w-76 w-fit p-5">
+      <h1 class="text-2xl bg-white/90 rounded-sm p-2">
+        Gebiete in Berlin mit
+        <span class="font-bold text-red-500">{activeTemperatureLevel} Temperatur</span> und
+        <span class="font-bold">{activePovertyLevel} Armutsquote</span> in Berlin
+      </h1>
+      <FilterMenu bind:filterActive bind:activePovertyLevel bind:activeTemperatureLevel
+      ></FilterMenu>
+    </div>
+
+    <div class="absolute bottom-0 p-5 z-10">
+      <Legend heatDomain={[heatMin, heatMax]} {heatScale} {incomeDomain}></Legend>
+    </div>
+    <Map {data} {activePovertyLevel} {activeTemperatureLevel} {filterActive} {heatScale}></Map>
   </div>
 </div>
