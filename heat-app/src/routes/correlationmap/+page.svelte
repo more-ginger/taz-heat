@@ -17,8 +17,6 @@
 
   let geodata = $derived(data.geodata);
 
-  $inspect(data.temperatureParam);
-
   //filter menu values
   // here we can set the states according to the URL params
   let activePovertyLevel = $state(data.povertyParam);
