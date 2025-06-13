@@ -10,15 +10,17 @@
   //I needed to rewind the data here
   //https://observablehq.com/@saneef/fix-geojson
   interface Props {
-    data: FeatureCollection;
+    data: { geodata: FeatureCollection; temperatureParam: string; povertyParam: string };
   }
 
   let { data }: Props = $props();
 
+  let geodata = $derived(data.geodata);
+
   //filter menu values
   // here we can set the states according to the URL params
-  let activePovertyLevel = $state("all");
-  let activeTemperatureLevel = $state("all");
+  let activePovertyLevel = $state(data.povertyParam);
+  let activeTemperatureLevel = $state(data.temperatureParam);
   // Derived value to update filterActive
   let filterActive = $derived.by(() => {
     return !(activePovertyLevel === "all" && activeTemperatureLevel === "all");
@@ -26,14 +28,14 @@
 
   //SCALES
   // dynamic domain for heat scale
-  let heatMin = $derived(Math.round(min(data.features.map((d) => d.properties?.LST))));
-  let heatMax = $derived(Math.round(max(data.features.map((d) => d.properties?.LST))));
+  let heatMin = $derived(Math.round(min(geodata.features.map((d) => d.properties?.LST))));
+  let heatMax = $derived(Math.round(max(geodata.features.map((d) => d.properties?.LST))));
   // Redid interpolation to add the ivory color as mid-point
   let heatColors = piecewise(interpolateRgb, ["#005AF5", "#F9EFE3", "#FF0000"]);
   let heatScale = $derived(scaleSequential([heatMin, heatMax], heatColors));
 
   // income levels domain for legend
-  let incomeLabels = $derived(data.features?.map((d) => d.properties?.lst_cat));
+  let incomeLabels = $derived(geodata.features?.map((d) => d.properties?.lst_cat));
   let incomeDomain = $derived(incomeLabels.filter((l, i) => incomeLabels.indexOf(l) === i));
 </script>
 
@@ -55,6 +57,7 @@
     <div class="absolute bottom-0 p-5 z-10">
       <Legend heatDomain={[heatMin, heatMax]} {heatScale} {incomeDomain}></Legend>
     </div>
-    <Map {data} {activePovertyLevel} {activeTemperatureLevel} {filterActive} {heatScale}></Map>
+    <Map data={geodata} {activePovertyLevel} {activeTemperatureLevel} {filterActive} {heatScale}
+    ></Map>
   </div>
 </div>
