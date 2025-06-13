@@ -14,10 +14,10 @@
 </script>
 
 {#snippet options()}
-  <option value="all">alle anzeigen</option>
-  <option value="low">niedrig</option>
-  <option value="medium">mittel</option>
-  <option value="high">hoch</option>
+  <option value="all">Alle anzeigen</option>
+  <option value="low">Niedrig</option>
+  <option value="medium">Mittel</option>
+  <option value="high">Hoch</option>
 {/snippet}
 
 <div class="flex flex-col text-sm gap-2.5">
@@ -28,7 +28,7 @@
     </select>
   </div>
   <div class="bg-white rounded-sm p-1 border-1 size-fit">
-    <label for="temperature cursor-pointer">Temperatur:</label>
+    <label for="temperature cursor-pointer">Oberflächtentemperatur:</label>
     <select class="underline" name="temperature" bind:value={activeTemperatureLevel}>
       {@render options()}
     </select>

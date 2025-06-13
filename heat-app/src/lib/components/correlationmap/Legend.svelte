@@ -14,7 +14,7 @@
 <div class="flex flex-col bg-white/90 rounded-sm p-2">
   <div>
     <div>
-      <h5 class="my-2">Durschnittliche Oberflächentemperatur:</h5>
+      <h5 class="my-2">Mittägliche Oberflächentemperatur <br />im Sommer:</h5>
     </div>
     <div>
       <div class="flex w-full">
@@ -31,7 +31,7 @@
   </div>
   <div>
     <div>
-      <h5 class="my-2">Quote der Sozialgeldempfänger:innen:</h5>
+      <h5 class="my-2">Quote der Empfänger*innen <br /> von Transferleistungen:</h5>
     </div>
     <div class="flex gap-2.5">
       {#each incomeDomain as level}
