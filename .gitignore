@@ -399,3 +399,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+.DS_Store
+heat-app/src/lib/fonts/AktivGrotesk_Md.ttf
+heat-app/src/lib/fonts/AktivGrotesk_Rg.ttf
