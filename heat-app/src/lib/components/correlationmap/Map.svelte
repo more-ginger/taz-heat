@@ -8,6 +8,7 @@
   import { select } from "d3-selection";
   import Pattern from "./Pattern.svelte";
   import ZoomMenu from "./ZoomMenu.svelte";
+  import InfoWindow from "./InfoWindow.svelte";
 
   interface Props {
     data: FeatureCollection;
@@ -101,6 +102,21 @@
         (activePovertyLevel === "all" || properties?.sgb_cat === activePovertyLevel))
     );
   }
+
+  // InfoWindow for sources
+  let isInfoWindowVisible = $state(false);
+
+  function showInfoWindow() {
+    isInfoWindowVisible = !isInfoWindowVisible;
+  }
+
+  function handleMapClick() {
+    closeTooltip();
+    console.log("Map clicked", isInfoWindowVisible);
+    if (isInfoWindowVisible) {
+      isInfoWindowVisible = false;
+    }
+  }
 </script>
 
 <div
@@ -113,10 +129,9 @@
     bind:this={svgElement}
     width={w}
     height={h}
-    onclick={closeTooltip}
+    onclick={handleMapClick}
     tabindex="0"
     role="button"
-    aria-label="close tooltip"
     onkeydown={closeTooltip}
     class="relative"
   >
@@ -144,7 +159,12 @@
       ></Tooltip>
     {/if}
   </svg>
-  <div class="absolute bottom-0 right-0 text-gray-600 italic text-[10px] p-5">
-    Quelle: A very long string of text with some name because I need to check the behaviour
-  </div>
+  <button
+    class="absolute bottom-0 right-0 m-5 size-8 bg-white hover:bg-gray-100 flex justify-center items-center border-1 rounded-sm cursor-pointer"
+    onclick={showInfoWindow}
+    >i
+  </button>
+  {#if isInfoWindowVisible}
+    <InfoWindow onClose={showInfoWindow} />
+  {/if}
 </div>
