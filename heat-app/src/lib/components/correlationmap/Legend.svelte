@@ -13,10 +13,12 @@
   let isExpanded = $state(true);
 </script>
 
-<div class="flex flex-col bg-white/90 rounded-sm p-2">
+<div
+  class="flex flex-col bg-white/90 hover:bg-gray-100/90 rounded-sm border-1 border-gray-300 text-gray-500 p-2 sm:max-w-[220px]"
+>
   <button
     class={`flex items-center justify-between w-full cursor-pointer text-left text-sm ${
-      isExpanded ? "mb-2" : "hover:underline"
+      isExpanded ? "mb-2" : ""
     }`}
     onclick={() => (isExpanded = !isExpanded)}
   >
@@ -39,14 +41,14 @@
     <div transition:slide={{ duration: 200 }}>
       <div>
         <div>
-          <h5 class="my-2">Mittägliche Oberflächentemperatur <br />im Sommer:</h5>
+          <h5 class="my-2">Mittägliche Oberflächentemperatur im Sommer:</h5>
         </div>
         <div>
           <div class="flex w-full">
             {#each range(heatDomain[0], heatDomain[1], 1) as temp}
               <div class="w-full">
                 <div
-                  class="w-full h-4 border border-white"
+                  class="w-full h-4 border border-white/90"
                   style="background:{heatScale(temp)}"
                 ></div>
                 <h5 class={`${temp === 39 || temp === 28 ? "block" : "hidden"}`}>
@@ -59,14 +61,14 @@
       </div>
       <div>
         <div>
-          <h5 class="my-2">Quote der Empfänger*innen <br /> von Transferleistungen:</h5>
+          <h5 class="my-2">Quote der Empfänger*innen von Transferleistungen:</h5>
         </div>
         <div class="flex gap-2.5">
           {#each incomeDomain as level}
             <div class="flex gap-1">
               <svg class="w-5 h-5">
                 <Pattern />
-                <circle cx="50%" cy="50%" r="9" fill={`url(#dots-${level})`} stroke="black">
+                <circle cx="50%" cy="50%" r="9" fill={`url(#dots-${level})`} stroke="#656979">
                 </circle>
               </svg>
               <h5>{level}</h5>

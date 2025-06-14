@@ -8,7 +8,7 @@
   let { zoomOut, zoomIn, resetZoom }: Props = $props();
 </script>
 
-<div class="absolute top-0 right-0 flex flex-col gap-1 z-10 p-5">
+<div class="absolute bottom-16.5 sm:top-0 right-0 flex flex-col gap-1 z-10 p-2.5 sm:p-5">
   <button
     class="size-8 bg-white hover:bg-gray-100 flex justify-center items-center border-1 rounded-sm cursor-pointer"
     onclick={zoomIn}>+</button
