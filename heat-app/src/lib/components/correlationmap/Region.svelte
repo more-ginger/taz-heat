@@ -34,15 +34,15 @@
     role="button"
     aria-label="tooltip"
     onkeydown={(e) => setTooltip(e, feature.properties!.PLR_ID)}
+    class="focus:outline-none"
   >
     <path
       d={path}
       id={feature.properties.Name}
-      class={`
-        stroke-black 
-        stroke-[0.5] 
-        ${tooltipRegionName == feature.properties.Name && regionHighlighted && "stroke-[2]"}
-      `}
+      class="
+        stroke-black
+        stroke-[0.5]
+        {tooltipRegionName == feature.properties.Name && regionHighlighted ? 'stroke-[2]' : ''}"
       fill={heatScale(feature.properties.LST)}
       {opacity}
     >
