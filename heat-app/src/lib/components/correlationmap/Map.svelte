@@ -9,6 +9,7 @@
   import Pattern from "./Pattern.svelte";
   import ZoomMenu from "./ZoomMenu.svelte";
   import InfoWindow from "./InfoWindow.svelte";
+  import Button from "./Button.svelte";
 
   interface Props {
     data: FeatureCollection;
@@ -158,11 +159,11 @@
     {/if}
   </svg>
   <ZoomMenu {zoomIn} {zoomOut} {resetZoom}></ZoomMenu>
-  <button
-    class="absolute bottom-0 right-0 m-2.5 sm:m-5 size-8 bg-white hover:bg-gray-100 flex justify-center items-center border-1 rounded-sm cursor-pointer"
-    onclick={showInfoWindow}
-    >i
-  </button>
+  <Button
+    handleClick={showInfoWindow}
+    ariaLabel={"Information zeigen"}
+    customCSS={"absolute bottom-0 right-0 m-2.5 sm:m-5"}>i</Button
+  >
   {#if isInfoWindowVisible}
     <InfoWindow onClose={showInfoWindow} />
   {/if}
