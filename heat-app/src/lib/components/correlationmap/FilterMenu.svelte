@@ -1,8 +1,10 @@
 <script lang="ts">
+  import type { Filter } from "$lib/types/types";
+
   interface Props {
     filterActive: boolean;
-    activePovertyLevel: string;
-    activeTemperatureLevel: string;
+    activePovertyLevel: Filter;
+    activeTemperatureLevel: Filter;
   }
 
   //bindable filter menu values
