@@ -44,11 +44,7 @@
 
   //zoom
   let zoomTransform = $state("");
-  let zoomTooltip = $derived.by(() => {
-    const tooltipZoom = { ...zoomTransform, k: 1 };
-    return tooltipZoom;
-  });
-
+  let zoomTooltip = $state("");
   const zoomMap = $derived(
     zoom()
       .translateExtent([
@@ -57,7 +53,9 @@
       ])
       .scaleExtent([1, 4])
       .on("zoom", ({ transform }) => {
-        zoomTransform = transform;
+        zoomTransform = transform.toString();
+        //only use x and z pos for tooltip, scale = 1
+        zoomTooltip = transform.scale(1.0);
       })
   );
 
@@ -156,7 +154,7 @@
         feature={tooltipRegion}
         centroid={pathGenerator.centroid(tooltipRegion)}
         isTooltipActive={isRegionHighlighted(tooltipRegion.properties)}
-        transform={zoomTooltip}
+        {zoomTooltip}
       ></Tooltip>
     {/if}
   </svg>

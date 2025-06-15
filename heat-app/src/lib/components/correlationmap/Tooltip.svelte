@@ -5,9 +5,9 @@
     feature: Feature;
     centroid: number[];
     isTooltipActive: boolean;
-    transform: string;
+    zoomTooltip: string;
   }
-  let { feature, centroid, isTooltipActive, transform }: Props = $props();
+  let { feature, centroid, isTooltipActive, zoomTooltip }: Props = $props();
 
   let offsetX = 0;
   let offsetY = 0;
@@ -46,7 +46,7 @@
     y={centroid[1] + offsetY}
     width="160"
     height="100"
-    {transform}
+    transform={zoomTooltip}
   >
     <div class="bg-white/90 text-center rounded-lg z-10 break-words flex flex-col p-1 mt-2 border">
       <h3 class="text-sm">{feature.properties!.Name}</h3>
