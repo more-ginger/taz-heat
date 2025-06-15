@@ -54,13 +54,11 @@
   let incomeDomain = $derived(incomeLabels.filter((l, i) => incomeLabels.indexOf(l) === i));
 </script>
 
-<div
-  class="w-full max-w-[660px] h-[624px] m-auto flex flex-col sm:flex-row border-1 border-black mt-20"
->
+<div class="w-full max-w-[660px] h-[624px] m-auto flex flex-col sm:flex-row">
   <div class="w-full h-full relative">
     <!-- to do: add logic for sentence when we get the text from taz -->
     <div
-      class="absolute -top-0.5 -left-0.5 flex flex-col gap-2 z-10 sm:max-w-[450px] w-fit p-2.5 sm:p-5"
+      class="absolute -top-0.5 -left-0.5 flex flex-col gap-2 z-10 max-w-[450px] w-fit py-2.5 sm:py-5"
     >
       <h1 class="text-2xl bg-white/90 rounded-sm p-1 sm:p-2 size-fit">
         {#if dynamicTitle}

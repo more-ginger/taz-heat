@@ -10,7 +10,7 @@
   let { zoomOut, zoomIn, resetZoom }: Props = $props();
 </script>
 
-<div class="absolute bottom-16.5 sm:top-0 right-0 flex flex-col gap-1 z-10 p-2.5 sm:p-5">
+<div class="absolute bottom-16.5 sm:top-0 right-0 flex flex-col gap-1 z-10 py-2.5 sm:p-5">
   <Button handleClick={zoomIn} ariaLabel="zoom in">
     <svg
       xmlns="http://www.w3.org/2000/svg"
