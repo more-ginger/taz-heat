@@ -26,9 +26,10 @@
 <div class="flex flex-col text-sm gap-2.5 size-fit">
   <Dropdown
     {options}
-    value={activeTemperatureLevel}
+    bind:value={activeTemperatureLevel}
     name="temperature"
     label="Oberflächentemperatur:"
   ></Dropdown>
-  <Dropdown {options} value={activePovertyLevel} name="poverty" label="Armutsquote:"></Dropdown>
+  <Dropdown {options} bind:value={activePovertyLevel} name="poverty" label="Armutsquote:"
+  ></Dropdown>
 </div>

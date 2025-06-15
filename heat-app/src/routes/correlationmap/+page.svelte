@@ -7,6 +7,7 @@
   import Legend from "$lib/components/correlationmap/Legend.svelte";
   import { piecewise, interpolateRgb } from "d3-interpolate";
   import type { Filter, UXTexting } from "$lib/types/types";
+  import InfoWindow from "$lib/components/correlationmap/InfoWindow.svelte";
 
   //I needed to rewind the data here
   //https://observablehq.com/@saneef/fix-geojson
@@ -74,6 +75,7 @@
 
     <Map data={geodata} {activePovertyLevel} {activeTemperatureLevel} {filterActive} {heatScale}
     ></Map>
+    <InfoWindow />
     <div class="absolute bottom-0 p-2.5 sm:p-5 z-10">
       <Legend heatDomain={[heatMin, heatMax]} {heatScale} {incomeDomain}></Legend>
     </div>
