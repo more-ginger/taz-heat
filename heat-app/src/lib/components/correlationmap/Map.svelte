@@ -31,7 +31,7 @@
   let svgElement = $state() as Element;
 
   // Reactive switch case using $derived
-  let scaleRatio = $derived(w <= 450 ? 31000 : w <= 500 ? 40000 : 46000);
+  let scaleRatio = $derived((130 * w + 10000) / 2);
 
   //PROJECTION
   let projection = $derived(
@@ -151,14 +151,14 @@
         {/if}
       {/each}
     </g>
-    {#if tooltipRegion}
-      <Tooltip
-        feature={tooltipRegion}
-        centroid={pathGenerator.centroid(tooltipRegion)}
-        isTooltipActive={isRegionHighlighted(tooltipRegion.properties)}
-      ></Tooltip>
-    {/if}
   </svg>
+  {#if tooltipRegion}
+    <Tooltip
+      feature={tooltipRegion}
+      centroid={pathGenerator.centroid(tooltipRegion)}
+      isTooltipActive={isRegionHighlighted(tooltipRegion.properties)}
+    ></Tooltip>
+  {/if}
   <ZoomMenu {zoomIn} {zoomOut} {resetZoom}></ZoomMenu>
   <Button
     handleClick={showInfoWindow}

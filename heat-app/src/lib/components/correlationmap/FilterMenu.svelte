@@ -23,7 +23,7 @@
   <option value="high">Hoch</option>
 {/snippet}
 
-<div class="flex flex-col text-sm gap-2.5">
+<div class="flex flex-col text-sm gap-2.5 size-fit">
   <Dropdown
     {options}
     value={activeTemperatureLevel}
