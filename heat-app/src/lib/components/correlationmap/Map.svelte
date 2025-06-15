@@ -27,14 +27,14 @@
   let svgElement = $state() as Element;
 
   // Reactive switch case using $derived
-  let scaleRatio = $derived(w <= 500 ? 29000 : w <= 620 ? 45000 : 57000);
+  let scaleRatio = $derived(w <= 500 ? 29000 : w <= 660 ? 50000 : 57000);
 
   //PROJECTION
   let projection = $derived(
     geoMercator()
       .fitSize([w, h], data)
       .scale(scaleRatio) // manual scaling
-      .center([13.3, 52.5])
+      .center([13.4, 52.54])
       .translate([w / 2, h / 2])
   );
 
@@ -119,12 +119,7 @@
   }
 </script>
 
-<div
-  bind:clientHeight={h}
-  bind:clientWidth={w}
-  class="w-full relative h-dvh max-h-[400px] md:max-h-[600px]"
->
-  <ZoomMenu {zoomIn} {zoomOut} {resetZoom}></ZoomMenu>
+<div bind:clientHeight={h} bind:clientWidth={w} class="w-full relative h-dvh max-h-[624px]">
   <svg
     bind:this={svgElement}
     width={w}
@@ -159,8 +154,9 @@
       ></Tooltip>
     {/if}
   </svg>
+  <ZoomMenu {zoomIn} {zoomOut} {resetZoom}></ZoomMenu>
   <button
-    class="absolute bottom-0 right-0 m-5 size-8 bg-white hover:bg-gray-100 flex justify-center items-center border-1 rounded-sm cursor-pointer"
+    class="absolute bottom-0 right-0 m-2.5 sm:m-5 size-8 bg-white hover:bg-gray-100 flex justify-center items-center border-1 rounded-sm cursor-pointer"
     onclick={showInfoWindow}
     >i
   </button>

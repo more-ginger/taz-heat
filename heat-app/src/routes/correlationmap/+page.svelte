@@ -40,24 +40,26 @@
 </script>
 
 <div
-  class="w-full max-w-[1020px] md:max-h-[689px] m-auto flex flex-col md:flex-row border-1 border-black mt-20"
+  class="w-full max-w-[660px] h-[624px] m-auto flex flex-col sm:flex-row border-1 border-black mt-20"
 >
-  <div class="w-full relative">
+  <div class="w-full h-full relative">
     <!-- to do: add logic for sentence when we get the text from taz -->
-    <div class="absolute -top-0.5 -left-0.5 flex flex-col gap-5 z-10 md:max-w-76 w-fit p-5">
-      <h1 class="text-2xl bg-white/90 rounded-sm p-2">
-        Gebiete in Berlin mit
-        <span class="font-bold text-red-500">{activeTemperatureLevel} Temperatur</span> und
+    <div
+      class="absolute -top-0.5 -left-0.5 flex flex-col gap-2 z-10 sm:max-w-[450px] w-fit p-2.5 sm:p-5"
+    >
+      <h1 class="text-2xl bg-white/90 rounded-sm p-1 sm:p-2 size-fit">
+        Gebiete in Berlin mit einer
+        <span class="font-bold text-red-500">{activeTemperatureLevel} Temperatur</span> und einer
         <span class="font-bold">{activePovertyLevel} Armutsquote</span> in Berlin
       </h1>
       <FilterMenu bind:filterActive bind:activePovertyLevel bind:activeTemperatureLevel
       ></FilterMenu>
     </div>
 
-    <div class="absolute bottom-0 p-5 z-10">
-      <Legend heatDomain={[heatMin, heatMax]} {heatScale} {incomeDomain}></Legend>
-    </div>
     <Map data={geodata} {activePovertyLevel} {activeTemperatureLevel} {filterActive} {heatScale}
     ></Map>
+    <div class="absolute bottom-0 p-2.5 sm:p-5 z-10">
+      <Legend heatDomain={[heatMin, heatMax]} {heatScale} {incomeDomain}></Legend>
+    </div>
   </div>
 </div>
