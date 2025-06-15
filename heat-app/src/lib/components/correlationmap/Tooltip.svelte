@@ -5,8 +5,12 @@
     feature: Feature;
     centroid: number[];
     isTooltipActive: boolean;
+    transform: string;
   }
-  let { feature, centroid, isTooltipActive }: Props = $props();
+  let { feature, centroid, isTooltipActive, transform }: Props = $props();
+
+  let offsetX = 0;
+  let offsetY = 0;
 
   let temperature = $derived(
     new Intl.NumberFormat("de-DE", {
@@ -38,10 +42,11 @@
 {#if isTooltipActive}
   <foreignObject
     class="pointer-events-none"
-    x={xPosition - 80}
-    y={centroid[1] - 90}
+    x={xPosition + offsetX}
+    y={centroid[1] + offsetY}
     width="160"
     height="100"
+    {transform}
   >
     <div class="bg-white/90 text-center rounded-lg z-10 break-words flex flex-col p-1 mt-2 border">
       <h3 class="text-sm">{feature.properties!.Name}</h3>
