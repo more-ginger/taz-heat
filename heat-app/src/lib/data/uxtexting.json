@@ -1,0 +1,94 @@
+{
+  "headings": [
+    {
+      "poverty": "all",
+      "temperature": "all",
+      "title": "Gebiete in Berlin mit einer  <span class='font-bold'>all Temperatur</span> und einer all Armutsquote in Berlin"
+    },
+    {
+      "poverty": "low",
+      "temperature": "all",
+      "title": "Gebiete in Berlin mit einer all Temperatur und einer low Armutsquote in Berlin"
+    },
+    {
+      "poverty": "medium",
+      "temperature": "all",
+      "title": "Gebiete in Berlin mit einer all Temperatur und einer low Armutsquote in Berlin"
+    },
+    {
+      "poverty": "high",
+      "temperature": "all",
+      "title": "Gebiete in Berlin mit einer all Temperatur und einer low Armutsquote in Berlin"
+    },
+    {
+      "poverty": "all",
+      "temperature": "all",
+      "title": "Gebiete in Berlin mit einer all Temperatur und einer all Armutsquote in Berlin"
+    },
+    {
+      "poverty": "low",
+      "temperature": "low",
+      "title": "Gebiete in Berlin mit einer low Temperatur und einer low Armutsquote in Berlin"
+    },
+    {
+      "poverty": "medium",
+      "temperature": "low",
+      "title": "Gebiete in Berlin mit einer low Temperatur und einer low Armutsquote in Berlin"
+    },
+    {
+      "poverty": "high",
+      "temperature": "low",
+      "title": "Gebiete in Berlin mit einer low Temperatur und einer low Armutsquote in Berlin"
+    },
+    {
+      "poverty": "all",
+      "temperature": "low",
+      "title": "Gebiete in Berlin mit einer all Temperatur und einer all Armutsquote in Berlin"
+    },
+    {
+      "poverty": "low",
+      "temperature": "low",
+      "title": "Gebiete in Berlin mit einer low Temperatur und einer low Armutsquote in Berlin"
+    },
+    {
+      "poverty": "low",
+      "temperature": "medium",
+      "title": "Gebiete in Berlin mit einer medium Temperatur und einer low Armutsquote in Berlin"
+    },
+    {
+      "poverty": "medium",
+      "temperature": "medium",
+      "title": "Gebiete in Berlin mit einer medium Temperatur und einer low Armutsquote in Berlin"
+    },
+    {
+      "poverty": "high",
+      "temperature": "medium",
+      "title": "Gebiete in Berlin mit einer medium Temperatur und einer low Armutsquote in Berlin"
+    },
+    {
+      "poverty": "all",
+      "temperature": "medium",
+      "title": "Gebiete in Berlin mit einer medium Temperatur und einer medium Armutsquote in Berlin"
+    },
+    {
+      "poverty": "low",
+      "temperature": "high",
+      "title": "Gebiete in Berlin mit einer high Temperatur und einer low Armutsquote in Berlin"
+    },
+    {
+      "poverty": "medium",
+      "temperature": "high",
+      "title": "Gebiete in Berlin mit einer high Temperatur und einer low Armutsquote in Berlin"
+    },
+    {
+      "poverty": "high",
+      "temperature": "high",
+      "title": "Gebiete in Berlin mit einer high Temperatur und einer low Armutsquote in Berlin"
+    },
+    {
+      "poverty": "all",
+      "temperature": "high",
+      "title": "Gebiete in Berlin mit einer high Temperatur und einer low Armutsquote in Berlin"
+    }
+  ]
+}

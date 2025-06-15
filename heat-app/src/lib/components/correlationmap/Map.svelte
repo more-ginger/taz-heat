@@ -10,11 +10,12 @@
   import ZoomMenu from "./ZoomMenu.svelte";
   import InfoWindow from "./InfoWindow.svelte";
   import Button from "../uiElements/Button.svelte";
+  import type { Filter } from "$lib/types/types";
 
   interface Props {
     data: FeatureCollection;
-    activePovertyLevel: string;
-    activeTemperatureLevel: string;
+    activePovertyLevel: Filter;
+    activeTemperatureLevel: Filter;
     filterActive: boolean;
     heatScale: ScaleSequential<string, never>;
   }
