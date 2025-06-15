@@ -8,8 +8,6 @@
   import { select } from "d3-selection";
   import Pattern from "./Pattern.svelte";
   import ZoomMenu from "./ZoomMenu.svelte";
-  import InfoWindow from "./InfoWindow.svelte";
-  import Button from "../uiElements/Button.svelte";
   import type { Filter } from "$lib/types/types";
 
   interface Props {
@@ -106,21 +104,6 @@
         (activePovertyLevel === "all" || properties?.sgb_cat === activePovertyLevel))
     );
   }
-
-  // InfoWindow for sources
-  let isInfoWindowVisible = $state(false);
-
-  function showInfoWindow() {
-    isInfoWindowVisible = !isInfoWindowVisible;
-  }
-
-  function handleMapClick() {
-    closeTooltip();
-    console.log("Map clicked", isInfoWindowVisible);
-    if (isInfoWindowVisible) {
-      isInfoWindowVisible = false;
-    }
-  }
 </script>
 
 <div bind:clientHeight={h} bind:clientWidth={w} class="w-full relative h-dvh max-h-[624px]">
@@ -128,7 +111,7 @@
     bind:this={svgElement}
     width={w}
     height={h}
-    onclick={handleMapClick}
+    onclick={closeTooltip}
     tabindex="0"
     role="button"
     onkeydown={closeTooltip}
@@ -160,12 +143,4 @@
     {/if}
   </svg>
   <ZoomMenu {zoomIn} {zoomOut} {resetZoom}></ZoomMenu>
-  <Button
-    handleClick={showInfoWindow}
-    ariaLabel={"Information zeigen"}
-    customCSS={"absolute bottom-0 right-0 m-2.5 sm:m-5"}>i</Button
-  >
-  {#if isInfoWindowVisible}
-    <InfoWindow onClose={showInfoWindow} />
-  {/if}
 </div>
