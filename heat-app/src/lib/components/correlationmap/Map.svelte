@@ -24,6 +24,8 @@
   let w = $state(0);
   let h = $state(0);
 
+  let isDesktop = $derived(h > 500);
+
   let svgElement = $state() as Element;
 
   // Reactive switch case using $derived
@@ -141,6 +143,7 @@
             {heatScale}
             {setTooltip}
             {closeTooltip}
+            {isDesktop}
             tooltipRegionName={tooltipRegion?.properties?.Name}
           ></Region>
         {/if}
