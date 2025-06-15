@@ -26,9 +26,9 @@
 
   let opacity = $derived(regionHighlighted ? 1.0 : 0.1);
 
-  const handleClick = function (e: Event, id: string) {
-    if (isDesktop) {
-      setTooltip(e, feature.properties!.PLR_ID);
+  const handleClick = function (e: Event, id: number) {
+    if (!isDesktop) {
+      setTooltip(e, id);
     }
   };
 </script>

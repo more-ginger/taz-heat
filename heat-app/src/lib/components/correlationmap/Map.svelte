@@ -24,19 +24,19 @@
   let w = $state(0);
   let h = $state(0);
 
-  let isDesktop = $derived(h > 500);
+  let isDesktop = $derived(w > 500);
 
   let svgElement = $state() as Element;
 
   // Reactive switch case using $derived
-  let scaleRatio = $derived(w <= 500 ? 29000 : w <= 660 ? 50000 : 57000);
+  let scaleRatio = $derived((130 * w + 10000) / 2);
 
   //PROJECTION
   let projection = $derived(
     geoMercator()
       .fitSize([w, h], data)
       .scale(scaleRatio) // manual scaling
-      .center([13.4, 52.54])
+      .center([13.42, 52.54])
       .translate([w / 2, h / 2])
   );
 
@@ -49,10 +49,10 @@
   const zoomMap = $derived(
     zoom()
       .translateExtent([
-        [-200, -200],
+        [0, 0],
         [w, h],
       ])
-      .scaleExtent([1, 4])
+      .scaleExtent([1, 5])
       .on("zoom", ({ transform }) => {
         zoomTransform = transform;
       })
@@ -134,13 +134,13 @@
         {/if}
       {/each}
     </g>
-    {#if tooltipRegion}
-      <Tooltip
-        feature={tooltipRegion}
-        centroid={pathGenerator.centroid(tooltipRegion)}
-        isTooltipActive={isRegionHighlighted(tooltipRegion.properties)}
-      ></Tooltip>
-    {/if}
   </svg>
+  {#if tooltipRegion}
+    <Tooltip
+      feature={tooltipRegion}
+      centroid={pathGenerator.centroid(tooltipRegion)}
+      isTooltipActive={isRegionHighlighted(tooltipRegion.properties)}
+    ></Tooltip>
+  {/if}
   <ZoomMenu {zoomIn} {zoomOut} {resetZoom}></ZoomMenu>
 </div>

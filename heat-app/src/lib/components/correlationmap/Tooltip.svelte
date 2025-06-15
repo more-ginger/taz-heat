@@ -33,20 +33,21 @@
     }
     return xCentroid;
   });
+
+  const x = $derived(xPosition - 80);
+  const y = $derived(centroid[1] - 90);
 </script>
 
 {#if isTooltipActive}
-  <foreignObject
-    class="pointer-events-none"
-    x={xPosition - 80}
-    y={centroid[1] - 90}
-    width="160"
-    height="100"
+  <div
+    class="pointer-events-none absolute w-[160px] h-[100px] z-999"
+    style:top="{y}px"
+    style:left="{x}px"
   >
-    <div class="bg-white/90 text-center rounded-lg z-10 break-words flex flex-col p-1 mt-2 border">
+    <div class="bg-white/90 text-center rounded-lg break-words flex flex-col p-1 mt-2 border">
       <h3 class="text-sm">{feature.properties!.Name}</h3>
       <p class="text-xs">Temperatur: {temperature}</p>
       <p class="text-xs">SGB-Anteil: {percentage}</p>
     </div>
-  </foreignObject>
+  </div>
 {/if}
