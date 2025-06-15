@@ -9,7 +9,7 @@
   import Pattern from "./Pattern.svelte";
   import ZoomMenu from "./ZoomMenu.svelte";
   import InfoWindow from "./InfoWindow.svelte";
-  import Button from "./Button.svelte";
+  import Button from "../uiElements/Button.svelte";
 
   interface Props {
     data: FeatureCollection;

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import Dropdown from "../uiElements/Dropdown.svelte";
+
   interface Props {
     filterActive: boolean;
     activePovertyLevel: string;
@@ -21,16 +23,11 @@
 {/snippet}
 
 <div class="flex flex-col text-sm gap-2.5">
-  <div class="bg-white rounded-sm p-1 border-1 size-fit">
-    <label for="temperature cursor-pointer">Oberflächtentemperatur:</label>
-    <select class="underline" name="temperature" bind:value={activeTemperatureLevel}>
-      {@render options()}
-    </select>
-  </div>
-  <div class="bg-white rounded-sm p-1 border-1 size-fit">
-    <label for="poverty">Armutsquote</label>
-    <select class="underline cursor-pointer" name="poverty" bind:value={activePovertyLevel}>
-      {@render options()}
-    </select>
-  </div>
+  <Dropdown
+    {options}
+    value={activeTemperatureLevel}
+    name="temperature"
+    label="Oberflächentemperatur:"
+  ></Dropdown>
+  <Dropdown {options} value={activePovertyLevel} name="poverty" label="Armutsquote:"></Dropdown>
 </div>

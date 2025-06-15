@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Button from "./Button.svelte";
+  import Button from "../uiElements/Button.svelte";
 
   interface Props {
     zoomOut: () => void;
