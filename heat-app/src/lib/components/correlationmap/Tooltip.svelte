@@ -5,8 +5,19 @@
     feature: Feature;
     centroid: number[];
     isTooltipActive: boolean;
+    zoomTooltip: { x: number; y: number; k: number };
+    w: number;
   }
-  let { feature, centroid, isTooltipActive }: Props = $props();
+  let { feature, centroid, isTooltipActive, zoomTooltip, w }: Props = $props();
+
+  let offsetY = $derived(-90);
+  const leftEdge = $derived(90);
+  const rightEdge = $derived(w - 160);
+
+  let centroidTransformed = {
+    x: centroid[0] * zoomTooltip.k + zoomTooltip.x,
+    y: centroid[1] * zoomTooltip.k + zoomTooltip.y,
+  };
 
   let temperature = $derived(
     new Intl.NumberFormat("de-DE", {
@@ -25,17 +36,17 @@
 
   // X positioning of tooltip to avoid cut-off edges
   const xPosition = $derived.by(() => {
-    let xCentroid = centroid[0];
-    if (centroid[0] < 80) {
-      xCentroid += 80;
-    } else if (centroid[0] >= 300) {
-      xCentroid -= 80;
+    let xCentroid = centroidTransformed.x;
+    if (centroidTransformed.x < leftEdge) {
+      xCentroid += 0;
+    } else if (centroidTransformed.x >= rightEdge) {
+      xCentroid -= 160;
     }
     return xCentroid;
   });
 
-  const x = $derived(xPosition - 80);
-  const y = $derived(centroid[1] - 90);
+  const x = $derived(xPosition);
+  const y = $derived(centroidTransformed.y + offsetY);
 </script>
 
 {#if isTooltipActive}
