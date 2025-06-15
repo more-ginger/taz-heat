@@ -20,7 +20,7 @@
 >
 {#if isInfoWindowVisible}
   <div class="absolute top-0 w-full h-full flex items-center justify-center">
-    <div class=" flex items-center justify-center z-50">
+    <div class="max-w-[340px] sm:max-w-none flex items-center justify-center z-50">
       <div class="bg-white px-5 py-6 border-1 h-fit rounded-sm shadow-lg relative max-w-md w-full">
         <Button
           customCSS="absolute top-2 right-2"
