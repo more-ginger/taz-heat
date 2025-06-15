@@ -10,6 +10,7 @@
     setTooltip: (e: Event, id: number) => void;
     closeTooltip: () => void;
     tooltipRegionName: string;
+    isDesktop: boolean;
   }
 
   let {
@@ -20,29 +21,36 @@
     setTooltip,
     closeTooltip,
     tooltipRegionName,
+    isDesktop,
   }: Props = $props();
 
   let opacity = $derived(regionHighlighted ? 1.0 : 0.1);
+
+  const handleClick = function (e: Event, id: string) {
+    if (isDesktop) {
+      setTooltip(e, feature.properties!.PLR_ID);
+    }
+  };
 </script>
 
 {#if feature.properties}
   <g
-    onclick={(e) => setTooltip(e, feature.properties!.PLR_ID)}
+    onclick={(e) => handleClick(e, feature.properties!.PLR_ID)}
     onmouseenter={(e) => setTooltip(e, feature.properties!.PLR_ID)}
     onmouseleave={closeTooltip}
     tabindex="0"
     role="button"
     aria-label="tooltip"
     onkeydown={(e) => setTooltip(e, feature.properties!.PLR_ID)}
+    class="focus:outline-none"
   >
     <path
       d={path}
       id={feature.properties.Name}
-      class={`
-        stroke-black 
-        stroke-[0.5] 
-        ${tooltipRegionName == feature.properties.Name && regionHighlighted && "stroke-[2]"}
-      `}
+      class="
+        stroke-black
+        stroke-[0.5]
+        {tooltipRegionName == feature.properties.Name && regionHighlighted ? 'stroke-[2]' : ''}"
       fill={heatScale(feature.properties.LST)}
       {opacity}
     >

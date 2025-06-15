@@ -9,6 +9,7 @@
   import Pattern from "./Pattern.svelte";
   import ZoomMenu from "./ZoomMenu.svelte";
   import InfoWindow from "./InfoWindow.svelte";
+  import Button from "../uiElements/Button.svelte";
   import type { Filter } from "$lib/types/types";
 
   interface Props {
@@ -24,6 +25,8 @@
 
   let w = $state(0);
   let h = $state(0);
+
+  let isDesktop = $derived(h > 500);
 
   let svgElement = $state() as Element;
 
@@ -142,6 +145,7 @@
             {heatScale}
             {setTooltip}
             {closeTooltip}
+            {isDesktop}
             tooltipRegionName={tooltipRegion?.properties?.Name}
           ></Region>
         {/if}
@@ -156,11 +160,11 @@
     {/if}
   </svg>
   <ZoomMenu {zoomIn} {zoomOut} {resetZoom}></ZoomMenu>
-  <button
-    class="absolute bottom-0 right-0 m-2.5 sm:m-5 size-8 bg-white hover:bg-gray-100 flex justify-center items-center border-1 rounded-sm cursor-pointer"
-    onclick={showInfoWindow}
-    >i
-  </button>
+  <Button
+    handleClick={showInfoWindow}
+    ariaLabel={"Information zeigen"}
+    customCSS={"absolute bottom-0 right-0 m-2.5 sm:m-5"}>i</Button
+  >
   {#if isInfoWindowVisible}
     <InfoWindow onClose={showInfoWindow} />
   {/if}
