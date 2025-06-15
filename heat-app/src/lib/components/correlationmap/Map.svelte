@@ -51,7 +51,7 @@
   const zoomMap = $derived(
     zoom()
       .translateExtent([
-        [-200, -200],
+        [0, 0],
         [w, h],
       ])
       .scaleExtent([1, 5])
