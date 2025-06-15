@@ -6,24 +6,39 @@
   import { min, max } from "d3-array";
   import Legend from "$lib/components/correlationmap/Legend.svelte";
   import { piecewise, interpolateRgb } from "d3-interpolate";
+  import type { Filter, UXTexting } from "$lib/types/types";
 
   //I needed to rewind the data here
   //https://observablehq.com/@saneef/fix-geojson
   interface Props {
-    data: { geodata: FeatureCollection; temperatureParam: string; povertyParam: string };
+    data: {
+      geodata: FeatureCollection;
+      temperatureParam: Filter;
+      povertyParam: Filter;
+      uxtexting: UXTexting;
+    };
   }
 
   let { data }: Props = $props();
 
   let geodata = $derived(data.geodata);
 
-  //filter menu values
+  //FILTER MENU VALUES
   // here we can set the states according to the URL params
-  let activePovertyLevel = $state(data.povertyParam);
-  let activeTemperatureLevel = $state(data.temperatureParam);
+  let activePovertyLevel: Filter = $state(data.povertyParam);
+  let activeTemperatureLevel: Filter = $state(data.temperatureParam);
   // Derived value to update filterActive
   let filterActive = $derived.by(() => {
     return !(activePovertyLevel === "all" && activeTemperatureLevel === "all");
+  });
+
+  //TITLE
+  let dynamicTitle = $derived.by(() => {
+    let title = data.uxtexting.headings.find(
+      (d) => d.poverty == activePovertyLevel && d.temperature == activeTemperatureLevel
+    );
+    if (title) return title.title;
+    else return undefined;
   });
 
   //SCALES
@@ -40,24 +55,30 @@
 </script>
 
 <div
-  class="w-full max-w-[1020px] md:max-h-[689px] m-auto flex flex-col md:flex-row border-1 border-black mt-20"
+  class="w-full max-w-[660px] h-[624px] m-auto flex flex-col sm:flex-row border-1 border-black mt-20"
 >
-  <div class="w-full relative">
+  <div class="w-full h-full relative">
     <!-- to do: add logic for sentence when we get the text from taz -->
-    <div class="absolute -top-0.5 -left-0.5 flex flex-col gap-5 z-10 md:max-w-76 w-fit p-5">
-      <h1 class="text-2xl bg-white/90 rounded-sm p-2">
-        Gebiete in Berlin mit
-        <span class="font-bold text-red-500">{activeTemperatureLevel} Temperatur</span> und
-        <span class="font-bold">{activePovertyLevel} Armutsquote</span> in Berlin
+    <div
+      class="absolute -top-0.5 -left-0.5 flex flex-col gap-2 z-10 sm:max-w-[450px] w-fit p-2.5 sm:p-5"
+    >
+      <h1 class="text-2xl bg-white/90 rounded-sm p-1 sm:p-2 size-fit">
+        {#if dynamicTitle}
+          {@html dynamicTitle}
+        {:else}
+          Gebiete in Berlin mit einer
+          <span class="font-bold text-red-500">{activeTemperatureLevel} Temperatur</span> und einer
+          <span class="font-bold">{activePovertyLevel} Armutsquote</span> in Berlin
+        {/if}
       </h1>
       <FilterMenu bind:filterActive bind:activePovertyLevel bind:activeTemperatureLevel
       ></FilterMenu>
     </div>
 
-    <div class="absolute bottom-0 p-5 z-10">
-      <Legend heatDomain={[heatMin, heatMax]} {heatScale} {incomeDomain}></Legend>
-    </div>
     <Map data={geodata} {activePovertyLevel} {activeTemperatureLevel} {filterActive} {heatScale}
     ></Map>
+    <div class="absolute bottom-0 p-2.5 sm:p-5 z-10">
+      <Legend heatDomain={[heatMin, heatMax]} {heatScale} {incomeDomain}></Legend>
+    </div>
   </div>
 </div>

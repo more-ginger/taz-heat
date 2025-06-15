@@ -1,6 +1,20 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
+@font-face {
+  font-family: 'Aktiv Grotesk';
+  src: url('/src/lib/fonts/AktivGrotesk_Rg.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Aktiv Grotesk';
+  src: url('/src/lib/fonts/AktivGrotesk_Md.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
 @theme{
     --color-pink: #F40000;
     --color-pink-light: #F5748A;
@@ -10,7 +24,12 @@
     --color-orange:#D17000;
 }
 
+@layer base {
+  html {
+    font-family: 'Aktiv Grotesk', sans-serif;
+  }
+}
+
 h5 {
     font-size: 12px;
 }
-
