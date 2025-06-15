@@ -7,6 +7,7 @@
   import Legend from "$lib/components/correlationmap/Legend.svelte";
   import { piecewise, interpolateRgb } from "d3-interpolate";
   import type { Filter, UXTexting } from "$lib/types/types";
+  import InfoWindow from "$lib/components/correlationmap/InfoWindow.svelte";
 
   //I needed to rewind the data here
   //https://observablehq.com/@saneef/fix-geojson
@@ -54,11 +55,8 @@
   let incomeDomain = $derived(incomeLabels.filter((l, i) => incomeLabels.indexOf(l) === i));
 </script>
 
-<div
-  class="w-full max-w-[660px] h-[624px] m-auto flex flex-col sm:flex-row border-1 border-black mt-20"
->
+<div class="w-full max-w-[660px] h-[624px] m-auto flex flex-col sm:flex-row border-1 border-black">
   <div class="w-full h-full relative">
-    <!-- to do: add logic for sentence when we get the text from taz -->
     <div
       class="absolute -top-0.5 -left-0.5 flex flex-col gap-2 z-10 sm:max-w-[450px] w-fit p-2.5 sm:p-5"
     >
@@ -77,6 +75,7 @@
 
     <Map data={geodata} {activePovertyLevel} {activeTemperatureLevel} {filterActive} {heatScale}
     ></Map>
+    <InfoWindow />
     <div class="absolute bottom-0 p-2.5 sm:p-5 z-10">
       <Legend heatDomain={[heatMin, heatMax]} {heatScale} {incomeDomain}></Legend>
     </div>

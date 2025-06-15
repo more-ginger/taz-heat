@@ -8,7 +8,6 @@
   import { select } from "d3-selection";
   import Pattern from "./Pattern.svelte";
   import ZoomMenu from "./ZoomMenu.svelte";
-  import InfoWindow from "./InfoWindow.svelte";
   import type { Filter } from "$lib/types/types";
 
   interface Props {
@@ -25,17 +24,19 @@
   let w = $state(0);
   let h = $state(0);
 
+  let isDesktop = $derived(w > 500);
+
   let svgElement = $state() as Element;
 
   // Reactive switch case using $derived
-  let scaleRatio = $derived(w <= 500 ? 29000 : w <= 660 ? 50000 : 57000);
+  let scaleRatio = $derived((130 * w + 10000) / 2);
 
   //PROJECTION
   let projection = $derived(
     geoMercator()
       .fitSize([w, h], data)
       .scale(scaleRatio) // manual scaling
-      .center([13.4, 52.54])
+      .center([13.42, 52.54])
       .translate([w / 2, h / 2])
   );
 
@@ -48,10 +49,10 @@
   const zoomMap = $derived(
     zoom()
       .translateExtent([
-        [-200, -200],
+        [0, 0],
         [w, h],
       ])
-      .scaleExtent([1, 4])
+      .scaleExtent([1, 5])
       .on("zoom", ({ transform }) => {
         zoomTransform = transform.toString();
         //only use x and z pos for tooltip, scale = 1
@@ -105,21 +106,6 @@
         (activePovertyLevel === "all" || properties?.sgb_cat === activePovertyLevel))
     );
   }
-
-  // InfoWindow for sources
-  let isInfoWindowVisible = $state(false);
-
-  function showInfoWindow() {
-    isInfoWindowVisible = !isInfoWindowVisible;
-  }
-
-  function handleMapClick() {
-    closeTooltip();
-    console.log("Map clicked", isInfoWindowVisible);
-    if (isInfoWindowVisible) {
-      isInfoWindowVisible = false;
-    }
-  }
 </script>
 
 <div bind:clientHeight={h} bind:clientWidth={w} class="w-full relative h-dvh max-h-[624px]">
@@ -127,7 +113,7 @@
     bind:this={svgElement}
     width={w}
     height={h}
-    onclick={handleMapClick}
+    onclick={closeTooltip}
     tabindex="0"
     role="button"
     onkeydown={closeTooltip}
@@ -144,27 +130,20 @@
             {heatScale}
             {setTooltip}
             {closeTooltip}
+            {isDesktop}
             tooltipRegionName={tooltipRegion?.properties?.Name}
           ></Region>
         {/if}
       {/each}
     </g>
-    {#if tooltipRegion}
-      <Tooltip
-        feature={tooltipRegion}
-        centroid={pathGenerator.centroid(tooltipRegion)}
-        isTooltipActive={isRegionHighlighted(tooltipRegion.properties)}
-        {zoomTooltip}
-      ></Tooltip>
-    {/if}
   </svg>
-  <ZoomMenu {zoomIn} {zoomOut} {resetZoom}></ZoomMenu>
-  <button
-    class="absolute bottom-0 right-0 m-2.5 sm:m-5 size-8 bg-white hover:bg-gray-100 flex justify-center items-center border-1 rounded-sm cursor-pointer"
-    onclick={showInfoWindow}
-    >i
-  </button>
-  {#if isInfoWindowVisible}
-    <InfoWindow onClose={showInfoWindow} />
+  {#if tooltipRegion}
+    <Tooltip
+      feature={tooltipRegion}
+      centroid={pathGenerator.centroid(tooltipRegion)}
+      isTooltipActive={isRegionHighlighted(tooltipRegion.properties)}
+      {zoomTooltip}
+    ></Tooltip>
   {/if}
+  <ZoomMenu {zoomIn} {zoomOut} {resetZoom}></ZoomMenu>
 </div>
