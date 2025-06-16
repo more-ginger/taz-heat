@@ -14,7 +14,7 @@
 </script>
 
 <div
-  class="flex flex-col bg-white/90 hover:bg-gray-100/90 rounded-sm border-1 border-gray-300 text-gray-500 p-2 sm:max-w-[220px]"
+  class="flex flex-col bg-white/90 hover:bg-gray-100/90 rounded-sm border-1 border-gray-300 text-gray-500 p-2 max-w-[280px] sm:max-w-[220px]"
 >
   <button
     class={`flex items-center justify-between w-full cursor-pointer text-left text-sm ${
