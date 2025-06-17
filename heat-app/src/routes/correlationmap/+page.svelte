@@ -58,7 +58,7 @@
 <div class="w-full max-w-[660px] h-[624px] m-auto flex flex-col sm:flex-row overflow-hidden">
   <div class="w-full h-full relative">
     <div
-      class="absolute -top-0.5 -left-0.5 flex flex-col gap-2 z-10 sm:max-w-[450px] w-fit p-2.5 sm:p-5"
+      class="absolute -top-0.5 -left-0.5 flex flex-col gap-2 z-10 sm:max-w-[550px] w-fit p-2.5 sm:p-5"
     >
       <h1 class="text-xl sm:text-2xl bg-white/90 rounded-sm p-1 sm:p-2 size-fit">
         {#if dynamicTitle}
