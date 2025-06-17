@@ -3,92 +3,82 @@
     {
       "poverty": "all",
       "temperature": "all",
-      "title": "Gebiete in Berlin mit einer  <span class='font-bold'>all Temperatur</span> und einer all Armutsquote in Berlin"
-    },
-    {
-      "poverty": "low",
-      "temperature": "all",
-      "title": "Gebiete in Berlin mit einer all Temperatur und einer low Armutsquote in Berlin"
-    },
-    {
-      "poverty": "medium",
-      "temperature": "all",
-      "title": "Gebiete in Berlin mit einer all Temperatur und einer low Armutsquote in Berlin"
-    },
-    {
-      "poverty": "high",
-      "temperature": "all",
-      "title": "Gebiete in Berlin mit einer all Temperatur und einer low Armutsquote in Berlin"
-    },
-    {
-      "poverty": "all",
-      "temperature": "all",
-      "title": "Gebiete in Berlin mit einer all Temperatur und einer all Armutsquote in Berlin"
-    },
-    {
-      "poverty": "low",
-      "temperature": "low",
-      "title": "Gebiete in Berlin mit einer low Temperatur und einer low Armutsquote in Berlin"
-    },
-    {
-      "poverty": "medium",
-      "temperature": "low",
-      "title": "Gebiete in Berlin mit einer low Temperatur und einer low Armutsquote in Berlin"
-    },
-    {
-      "poverty": "high",
-      "temperature": "low",
-      "title": "Gebiete in Berlin mit einer low Temperatur und einer low Armutsquote in Berlin"
+      "title": "Die Innenstadtbereiche in Berlin sind deutlich heißer als die Ränder"
     },
     {
       "poverty": "all",
       "temperature": "low",
-      "title": "Gebiete in Berlin mit einer all Temperatur und einer all Armutsquote in Berlin"
+      "title": "Kühle Gebiete finden sich nur in Gebieten mit niedriger Armutsquote"
+    },
+    {
+      "poverty": "all",
+      "temperature": "medium",
+      "title": "Mittelmäßig heiße Gebiete liegen in Berlin nur selten in der Innenstadt"
+    },
+    {
+      "poverty": "all",
+      "temperature": "high",
+      "title": "Besonders heiß sind in Berlin die dicht bebauten und versiegelten Gebiete"
+    },
+    {
+      "poverty": "low",
+      "temperature": "all",
+      "title": "Reiche Menschen haben die Wahl zwischen kühlem Stadtrand und heißer Innenstadt"
     },
     {
       "poverty": "low",
       "temperature": "low",
-      "title": "Gebiete in Berlin mit einer low Temperatur und einer low Armutsquote in Berlin"
+      "title": "Kühle Gebiete mit reichen Menschen liegen hauptsächlich am Stadtrand"
     },
     {
       "poverty": "low",
       "temperature": "medium",
-      "title": "Gebiete in Berlin mit einer medium Temperatur und einer low Armutsquote in Berlin"
-    },
-    {
-      "poverty": "medium",
-      "temperature": "medium",
-      "title": "Gebiete in Berlin mit einer medium Temperatur und einer low Armutsquote in Berlin"
-    },
-    {
-      "poverty": "high",
-      "temperature": "medium",
-      "title": "Gebiete in Berlin mit einer medium Temperatur und einer low Armutsquote in Berlin"
-    },
-    {
-      "poverty": "all",
-      "temperature": "medium",
-      "title": "Gebiete in Berlin mit einer medium Temperatur und einer medium Armutsquote in Berlin"
+      "title": "Mittelmäßig heiße Viertel mit vielen Reichen liegen besonders am Stadtrand"
     },
     {
       "poverty": "low",
       "temperature": "high",
-      "title": "Gebiete in Berlin mit einer high Temperatur und einer low Armutsquote in Berlin"
+      "title": "Reiche Menschen wohnen vor allem in beliebten Lagen in heißen Vierteln"
+    },
+    {
+      "poverty": "medium",
+      "temperature": "all",
+      "title": "Kieze mit mittlerer Armutsquote liegen oft in mittel- bis sehr heißen Vierteln"
+    },
+    {
+      "poverty": "medium",
+      "temperature": "low",
+      "title": "Nur im Allendeviertel in Köpenick wohnen Menschen mit mittlerer Armut in einem kalten Viertel"
+    },
+    {
+      "poverty": "medium",
+      "temperature": "medium",
+      "title": "Am Übergang von Stadtrand zu Innenstadt finden sich Viertel mit mittlerer Armut und Temperatur"
     },
     {
       "poverty": "medium",
       "temperature": "high",
-      "title": "Gebiete in Berlin mit einer high Temperatur und einer low Armutsquote in Berlin"
+      "title": "In ganz Berlin gibt es heiße Viertel mit mittlerer Armutsquote"
+    },
+    {
+      "poverty": "high",
+      "temperature": "all",
+      "title": "Ärmere Menschen leben vor allem in heißen Vierteln"
+    },
+    {
+      "poverty": "high",
+      "temperature": "low",
+      "title": "Kein Viertel mit ärmeren Menschen liegt in einem kalten Gebiet"
+    },
+    {
+      "poverty": "high",
+      "temperature": "medium",
+      "title": "Nur einige Viertel mit ärmeren Menschen sind mittelmäßig warm"
     },
     {
       "poverty": "high",
       "temperature": "high",
-      "title": "Gebiete in Berlin mit einer high Temperatur und einer low Armutsquote in Berlin"
-    },
-    {
-      "poverty": "all",
-      "temperature": "high",
-      "title": "Gebiete in Berlin mit einer high Temperatur und einer low Armutsquote in Berlin"
+      "title": "Ein Großteil der ärmeren Menschen wohnt in heißen Gegenden"
     }
   ]
 }
