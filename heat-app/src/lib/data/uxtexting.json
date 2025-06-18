@@ -3,12 +3,12 @@
     {
       "poverty": "all",
       "temperature": "all",
-      "title": "Die Innenstadtbereiche in Berlin sind deutlich heißer als die Ränder"
+      "title": "Ärmere Menschen leben in den heißesten Gegenden Berlins"
     },
     {
       "poverty": "all",
       "temperature": "low",
-      "title": "Kühle Gebiete finden sich nur in Gebieten mit niedriger Armutsquote"
+      "title": "In kühlen Gebieten ist die Armutsquote immer niedrig"
     },
     {
       "poverty": "all",

@@ -41,7 +41,7 @@
     <div transition:slide={{ duration: 200 }}>
       <div>
         <div>
-          <h5 class="my-2">Mittägliche Oberflächentemperatur im Sommer:</h5>
+          <h5 class="my-2">Oberflächentemperatur im Sommer:</h5>
         </div>
         <div>
           <div class="flex w-full">
