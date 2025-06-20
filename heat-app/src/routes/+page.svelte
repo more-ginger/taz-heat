@@ -3,4 +3,5 @@
 
 <nav class="flex flex-col text-orange">
   <a class="underline" href="/correlationmap"> correlationmap</a>
+  <a class="underline" href="/sensordiagram"> sensordiagram</a>
 </nav>
