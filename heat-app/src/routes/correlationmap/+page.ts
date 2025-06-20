@@ -12,9 +12,14 @@ const checkParam = function (temp: string | null) {
 };
 
 export const load: PageLoad = ({ url }) => {
-  const params = new URLSearchParams(url.search);
-  const temperature = checkParam(params.get("temperature"));
-  const poverty = checkParam(params.get("poverty"));
+  let temperature = "all";
+  let poverty = "all";
+
+  if (typeof window !== "undefined") {
+    const params = new URLSearchParams(url.search);
+    temperature = checkParam(params.get("temperature"));
+    poverty = checkParam(params.get("poverty"));
+  }
 
   return {
     geodata: geodata,
