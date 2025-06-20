@@ -11,6 +11,12 @@
 
   let { heatDomain, heatScale, incomeDomain }: Props = $props();
   let isExpanded = $state(true);
+
+  const legendLabels = {
+    high: "hoch",
+    medium: "mittel",
+    low: "niedrig",
+  };
 </script>
 
 <div
@@ -71,7 +77,7 @@
                 <circle cx="50%" cy="50%" r="9" fill={`url(#dots-${level})`} stroke="#656979">
                 </circle>
               </svg>
-              <h5>{level}</h5>
+              <h5>{legendLabels[level as keyof typeof legendLabels]}</h5>
             </div>
           {/each}
         </div>

@@ -14,6 +14,10 @@ const config = {
       precompress: false,
       strict: true,
     }),
+    // Configure the base path for deployment
+    paths: {
+      base: '/Projekt/hitzemessen',
+    },
     // This enables static site generation
     prerender: {
       entries: ["*"],
