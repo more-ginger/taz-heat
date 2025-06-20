@@ -8,26 +8,43 @@
   import { piecewise, interpolateRgb } from "d3-interpolate";
   import type { Filter, UXTexting } from "$lib/types/types";
   import InfoWindow from "$lib/components/correlationmap/InfoWindow.svelte";
+  import { onMount } from "svelte";
 
   //I needed to rewind the data here
   //https://observablehq.com/@saneef/fix-geojson
   interface Props {
     data: {
       geodata: FeatureCollection;
-      temperatureParam: Filter;
-      povertyParam: Filter;
+      url: URL;
       uxtexting: UXTexting;
     };
   }
 
   let { data }: Props = $props();
 
+  let temperatureParam: Filter = $state("all");
+  let povertyParam: Filter = $state("all");
   let geodata = $derived(data.geodata);
+
+  //URL
+  const checkParam = function (temp: string | null) {
+    if (temp && ["high", "low", "medium", "all"].includes(temp)) {
+      return temp;
+    } else {
+      return "all";
+    }
+  };
+
+  onMount(() => {
+    const params = new URLSearchParams(data.url.search);
+    temperatureParam = checkParam(params.get("temperature")) as Filter;
+    povertyParam = checkParam(params.get("poverty")) as Filter;
+  });
 
   //FILTER MENU VALUES
   // here we can set the states according to the URL params
-  let activePovertyLevel: Filter = $state(data.povertyParam);
-  let activeTemperatureLevel: Filter = $state(data.temperatureParam);
+  let activePovertyLevel: Filter = $state(povertyParam);
+  let activeTemperatureLevel: Filter = $state(temperatureParam);
   // Derived value to update filterActive
   let filterActive = $derived.by(() => {
     return !(activePovertyLevel === "all" && activeTemperatureLevel === "all");
